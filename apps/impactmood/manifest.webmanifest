@@ -1,0 +1,17 @@
+{
+  "name": "ImpactMood — معًا لأثر أكبر",
+  "short_name": "ImpactMood",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fc",
+  "theme_color": "#1d54d8",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "./assets/impact-icon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
