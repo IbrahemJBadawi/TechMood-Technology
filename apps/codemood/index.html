@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123e31">
+<meta name="description" content="CodeMood — تعلم البرمجة والذكاء الاصطناعي خطوة بخطوة بالتحديات والنقاط.">
+<title>CodeMood | تعلّم البرمجة بشغف</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<script src="/icons.js" defer></script><script src="/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar" aria-label="القائمة الجانبية">
+<a class="brand" href="#home" aria-label="CodeMood الرئيسية">
+<span class="brand-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 13 9 24l10 11M29 13l10 11-10 11M27 10 21 38" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="brand-word" dir="ltr">Code<span>Mood</span><small>by TechMood Technology</small></span></a>
+<div class="sidebar-label">مساحة التعلّم</div>
+<nav class="side-nav" id="sideNav" aria-label="التنقل">
+<button class="nav-item active" data-go="home" type="button"><span data-icon="house"></span><span>الرئيسية</span></button>
+<button class="nav-item" data-go="tracks" type="button"><span data-icon="route"></span><span>المسارات التعليمية</span></button>
+<button class="nav-item" data-go="challenges" type="button"><span data-icon="code-2"></span><span>التحديات البرمجية</span></button>
+<button class="nav-item" data-go="achievements" type="button"><span data-icon="trophy"></span><span>الإنجازات</span></button></nav>
+<div class="sidebar-label">حسابك</div>
+<nav class="side-nav"><button class="nav-item" data-go="profile" type="button"><span data-icon="settings"></span><span>الإعدادات</span></button></nav>
+<div class="sidebar-bottom"><div class="sidebar-tip"><div class="tip-icon"><span data-icon="sparkles"></span></div><strong>خطوة صغيرة كل يوم</strong><p>خمسة دقائق من التعلّم تصنع فرقًا كبيرًا غدًا.</p><button data-go="challenges" type="button">ابدأ تحديًا <span data-icon="arrow-left"></span></button></div><div class="team-brand">منتج من <strong>TechMood Technology</strong></div></div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="main-area">
+<header class="topbar">
+<div class="topbar-start"><button class="icon-button mobile-menu" id="menuButton" type="button" aria-label="فتح القائمة"><span data-icon="menu"></span></button><div class="breadcrumbs"><span>CodeMood</span><span class="sep">/</span><b id="crumb">الرئيسية</b></div></div>
+<div class="topbar-actions"><span class="demo-chip"><span class="dot"></span>نسخة تجريبية</span><button class="top-pill" data-go="achievements" type="button" aria-label="عرض النقاط"><span data-icon="zap"></span><b id="headerXp">0</b><span>XP</span></button><button class="avatar" data-go="profile" type="button" aria-label="الملف الشخصي"><span id="avatarLetter">م</span></button></div>
+</header>
+<main id="main" tabindex="-1"><div class="view" id="view"></div></main>
+<footer class="footer"><span dir="ltr">CodeMood © 2026</span><span>مصنوع للتعلّم بشغف · <strong>TechMood Technology</strong></span><span>البيانات محفوظة محليًا على هذا الجهاز</span></footer>
+</div></div>
+<nav class="mobile-bottom" aria-label="التنقل السريع">
+<button data-go="home" type="button"><span data-icon="house"></span><small>الرئيسية</small></button>
+<button data-go="tracks" type="button"><span data-icon="route"></span><small>المسارات</small></button>
+<button data-go="challenges" type="button"><span data-icon="code-2"></span><small>التحديات</small></button>
+<button data-go="achievements" type="button"><span data-icon="trophy"></span><small>الإنجازات</small></button>
+<button data-go="profile" type="button"><span data-icon="user-round"></span><small>حسابي</small></button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><div id="modalRoot"></div>
+</body></html>
