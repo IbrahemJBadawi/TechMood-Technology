@@ -357,3 +357,36 @@ svg { display: block; flex-shrink: 0; }
 @media (prefers-reduced-motion: reduce) {
   .landing *, .app-shell * { animation:none!important; scroll-behavior:auto!important; transition-duration:.01ms!important; }
 }
+
+/* Header utility and icon finishing touches */
+.header-info {
+  width: 38px; height: 38px; display: inline-grid; place-items: center;
+  border: 1px solid #e2eade; border-radius: 12px;
+  background: #f7faf6; color: #476e57;
+  transition: background .18s, color .18s;
+}
+.header-info:hover { background: #e7f5e5; color: #1c6443; }
+.header-info svg { width: 18px; height: 18px; }
+.menu-button {
+  width: 40px; height: 40px; align-items: center; justify-content: center;
+  border-radius: 11px; color: #1b5e42;
+}
+.menu-button:hover { background:#e7f3e8; }
+.menu-button svg { width: 23px; height: 23px; }
+.preview-dots svg { width: 21px; height:21px; }
+.workspace-switch .chevron { display:grid;place-items:center; }
+.workspace-switch .chevron svg { width:16px; height:16px; }
+.side-brand-icon svg { width: 28px; height: 28px; }
+.icon-close:hover { background:#e9f3e7; color:#205d43; }
+.icon-close [data-icon] { display:grid;place-items:center; }
+.cert-symbol svg { width:31px;height:31px;margin:0 auto; }
+.empty-icon svg { width:35px;height:35px;margin:0 auto; }
+.app-btn svg,.side-exit svg { display:inline-block; vertical-align:middle; }
+@media (max-width: 550px) {
+  .header-info { width:34px; height:34px; border-radius:10px; }
+  .site-header { gap:9px; }
+  .app-header .header-left { gap:6px; }
+  .menu-button { min-width:40px; min-height:40px; }
+  .app-header .breadcrumb { max-width:42vw; white-space:nowrap; overflow:hidden; }
+  .app-header .breadcrumb strong { overflow:hidden; text-overflow:ellipsis; }
+}
