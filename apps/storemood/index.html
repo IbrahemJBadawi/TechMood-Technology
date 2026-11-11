@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#006BE0">
+  <meta name="description" content="StoreMood — نظّم اشتراكاتك الرقمية واكتشف خدمات TechMood. نسخة تفاعلية تجريبية.">
+  <title>StoreMood | اشتراكاتك، أبسط</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>try{var theme=localStorage.getItem('storemood_theme');if(theme==='dark'||theme==='light')document.documentElement.dataset.theme=theme}catch(e){}</script>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="svg-sprite">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3m2 0h3"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9 5 3h14l2 6v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 14v7h14v-7M9 21v-6h6v6"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15.4A8 8 0 0 1 8.6 4a8 8 0 1 0 11.4 11.4Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-credit" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4 6 4 9s-1 6-4 9c-3-3-4-6-4-9s1-6 4-9Z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 2 1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6zM20 17l.6 1.4L22 19l-1.4.6L20 21l-.6-1.4L18 19l1.4-.6z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 2 2 0 0 1 1.5-3.2H18a4 4 0 0 0 4-4A9 9 0 0 0 12 3Z"/><circle cx="7" cy="12" r="1"/><circle cx="9" cy="7" r="1"/><circle cx="16" cy="8" r="1"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h4v7H6a2 2 0 0 1-2-2zm16 0h-4v7h2a2 2 0 0 0 2-2z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m3 0-1 14H7L6 7m4 4v6m4-6v6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 17 1-5L16 2l6 6-10 11-6 1-2-3ZM14 4l6 6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7V3l-4 4h4a8 8 0 1 1-2-3"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M6 16v-5m6 5V5m6 11V9"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="القائمة الرئيسية">
+      <a href="#overview" class="brand" data-page="overview" aria-label="StoreMood الرئيسية">
+        <span class="brand-symbol"><svg class="icon"><use href="#i-layers"/></svg></span>
+        <span class="brand-text"><strong>Store<span>Mood</span></strong><small>by TechMood Technology</small></span>
+      </a>
+      <div class="sidebar-group-label">مساحة العمل</div>
+      <nav class="side-nav" aria-label="الأقسام">
+        <button class="nav-item active" type="button" data-page="overview"><svg class="icon"><use href="#i-home"/></svg>الرئيسية</button>
+        <button class="nav-item" type="button" data-page="subscriptions"><svg class="icon"><use href="#i-calendar"/></svg>اشتراكاتي</button>
+        <button class="nav-item" type="button" data-page="catalog"><svg class="icon"><use href="#i-store"/></svg>متجر الخدمات</button>
+        <button class="nav-item" type="button" data-page="orders"><svg class="icon"><use href="#i-bag"/></svg>طلباتي</button>
+        <button class="nav-item" type="button" data-page="notifications"><svg class="icon"><use href="#i-bell"/></svg>الإشعارات<span class="side-count" id="sideCount" hidden></span></button>
+      </nav>
+      <div class="sidebar-group-label">التفضيلات</div>
+      <nav class="side-nav"><button class="nav-item" type="button" data-page="settings"><svg class="icon"><use href="#i-settings"/></svg>الإعدادات</button></nav>
+      <div class="sidebar-bottom">
+        <div class="mini-illustration"><svg class="icon"><use href="#i-sparkles"/></svg><strong>كل اشتراكاتك، بمكان واحد.</strong><span>نظّم وتجدد وتابع بسهولة.</span></div>
+        <div class="sidebar-footer">© 2026 TechMood Technology</div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <div class="crumb"><div class="top-identity">StoreMood <span>/</span> <b id="currentPage">الرئيسية</b></div><p>نظامك الذكي للاشتراكات والخدمات الرقمية</p></div>
+        <div class="top-actions">
+          <span class="demo-pill"><span class="pulse-dot"></span> نسخة تجريبية</span>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" title="تبديل المظهر"><svg class="icon"><use href="#i-moon"/></svg></button>
+          <button class="icon-button bell-button" type="button" data-page="notifications" aria-label="عرض الإشعارات"><svg class="icon"><use href="#i-bell"/></svg><i id="topDot" class="notification-dot" hidden></i></button>
+          <div class="avatar" title="زائر">ز</div>
+        </div>
+      </header>
+
+      <main class="main-content" id="mainContent">
+        <section class="page-section" data-view="overview">
+          <div class="hero">
+            <div class="hero-content">
+              <div class="hero-kicker"><svg class="icon"><use href="#i-sparkles"/></svg>اشتراكات أذكى، يوم أهدأ</div>
+              <h1>كل خدماتك الرقمية،<br><em>تحت سيطرتك.</em></h1>
+              <p>تابع تجديداتك ومصاريفك، واكتشف خدمات تدعم أعمالك. كل شيء في مساحة واحدة بسيطة.</p>
+              <div class="hero-actions"><button class="btn btn-white" id="heroAdd" type="button"><svg class="icon"><use href="#i-plus"/></svg>أضف اشتراكًا</button><button class="btn btn-ghost-light" type="button" data-page="catalog">تصفح الخدمات <svg class="icon"><use href="#i-arrow"/></svg></button></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-orbit art-orbit-one"></div><div class="art-orbit art-orbit-two"></div>
+              <div class="art-card art-main"><div class="art-top"><span class="art-logo">S</span><span class="art-bars">•••</span></div><span class="art-small">إجمالي اشتراكاتك</span><strong id="heroCount">3</strong><div class="art-bottom"><span class="art-bar" style="width:34%"></span><span class="art-bar" style="width:22%"></span><span class="art-bar" style="width:29%"></span></div></div>
+              <div class="art-card art-floating"><span class="art-check"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>متابعة ذكية</strong><small>مواعيدك دائمًا واضحة</small></div></div>
+              <div class="art-circle">✦</div>
+            </div>
+          </div>
+
+          <div class="section-heading stats-heading"><div><span class="eyebrow">نظرة سريعة</span><h2>ملخص اشتراكاتك</h2></div><span class="hint">تحديث تلقائي حسب بيانات هذا الجهاز</span></div>
+          <div class="stats-grid" id="overviewStats" aria-live="polite"></div>
+          <div class="dashboard-grid">
+            <section class="surface-card renew-panel">
+              <div class="panel-heading"><div><h2>التجديدات القادمة</h2><p>تابع ما يحتاج انتباهك</p></div><button class="text-link" type="button" data-page="subscriptions">عرض الكل <svg class="icon"><use href="#i-arrow"/></svg></button></div>
+              <div id="upcomingList"></div>
+            </section>
+            <section class="surface-card guidance-panel">
+              <span class="guidance-icon"><svg class="icon"><use href="#i-shield"/></svg></span>
+              <h2>ولا تجديد يفوتك.</h2><p>سجّل اشتراكاتك حتى لو كانت من مزود خارجي. ستظهر لك تذكيراتها داخل هذه المنصة.</p>
+              <div class="guidance-steps"><span>01 <b>أضف الاشتراك</b></span><span>02 <b>حدد التجديد</b></span><span>03 <b>تابع التنبيهات</b></span></div>
+              <button type="button" class="text-link" id="guidanceAdd">ابدأ الآن <svg class="icon"><use href="#i-arrow"/></svg></button>
+            </section>
+          </div>
+          <div class="section-heading"><div><span class="eyebrow">من منظومة TechMood</span><h2>خدمات قد تهمك</h2></div><button type="button" class="text-link" data-page="catalog">استعرض جميع الخدمات <svg class="icon"><use href="#i-arrow"/></svg></button></div>
+          <div class="services-grid compact" id="featuredServices"></div>
+        </section>
+
+        <section class="page-section" data-view="subscriptions" hidden>
+          <div class="page-heading"><div><span class="eyebrow">تجديدات تحت السيطرة</span><h1>اشتراكاتي <span class="heading-muted" id="subPageCount"></span></h1><p>أضف اشتراكك، غيّر تفاصيله أو سجّل التجديد في ثوانٍ.</p></div><button class="btn btn-primary" type="button" id="addSubscription"><svg class="icon"><use href="#i-plus"/></svg>اشتراك جديد</button></div>
+          <div class="toolbar"><label class="search-field"><svg class="icon"><use href="#i-search"/></svg><input id="subSearch" type="search" placeholder="ابحث في اشتراكاتك..." aria-label="ابحث في اشتراكاتك"></label><div class="tool-help">الاشتراكات الخارجية لا تُجدد تلقائيًا.</div></div>
+          <div class="subscription-grid" id="subscriptionsList"></div>
+        </section>
+
+        <section class="page-section" data-view="catalog" hidden>
+          <div class="page-heading"><div><span class="eyebrow">منتجات وخدمات رقمية</span><h1>متجر StoreMood</h1><p>حلول تقنية ومنتجات رقمية تساعدك على الانطلاق والنمو.</p></div><span class="demo-tag"><svg class="icon"><use href="#i-info"/></svg>عروض تعريفية</span></div>
+          <div class="catalog-banner"><span class="catalog-badge"><svg class="icon"><use href="#i-sparkles"/></svg></span><div><strong>خدمات TechMood وشركاؤها قريبًا</strong><p>الأسعار والعروض الحالية تعريفية، وإنشاء الطلب يحفظ مسودة على جهازك فقط.</p></div></div>
+          <div class="toolbar catalog-toolbar"><label class="search-field"><svg class="icon"><use href="#i-search"/></svg><input id="serviceSearch" type="search" placeholder="ابحث عن خدمة أو منتج..." aria-label="ابحث عن خدمة"></label></div>
+          <div class="filter-row" id="serviceFilters" aria-label="تصفية الخدمات">
+            <button type="button" class="filter-chip selected" data-filter="all">جميع الخدمات</button>
+            <button type="button" class="filter-chip" data-filter="web">المواقع والمتاجر</button>
+            <button type="button" class="filter-chip" data-filter="ai">الذكاء الاصطناعي</button>
+            <button type="button" class="filter-chip" data-filter="brand">التصميم والهوية</button>
+            <button type="button" class="filter-chip" data-filter="support">الدعم والتشغيل</button>
+          </div>
+          <div class="services-grid" id="servicesGrid"></div>
+        </section>
+
+        <section class="page-section" data-view="orders" hidden>
+          <div class="page-heading"><div><span class="eyebrow">سجل الخدمة</span><h1>طلباتي</h1><p>مسودات طلباتك المحفوظة على هذا الجهاز.</p></div><button class="btn btn-secondary" type="button" data-page="catalog"><svg class="icon"><use href="#i-store"/></svg>استكشف الخدمات</button></div>
+          <div class="notice notice-info"><svg class="icon"><use href="#i-info"/></svg><div>الطلبات هنا <strong>مسودات محلية غير مرسلة</strong>. لا يوجد تحصيل دفع أو مراجعة إدارية فعلية حتى تفعيل الخادم وقاعدة البيانات.</div></div>
+          <div id="ordersList" class="order-list"></div>
+        </section>
+
+        <section class="page-section" data-view="notifications" hidden>
+          <div class="page-heading"><div><span class="eyebrow">ابقَ على اطلاع</span><h1>الإشعارات</h1><p>تنبيهات التجديدات والتغييرات داخل StoreMood.</p></div><button class="btn btn-secondary" type="button" id="markRead"><svg class="icon"><use href="#i-check"/></svg>تحديد الكل كمقروء</button></div>
+          <div class="notice notice-info"><svg class="icon"><use href="#i-info"/></svg><div>هذه تنبيهات داخل الصفحة تُحسب عند فتح الموقع. إشعارات Push والبريد الإلكتروني غير مفعلة بعد.</div></div>
+          <div id="notificationsList" class="notification-list"></div>
+        </section>
+
+        <section class="page-section" data-view="settings" hidden>
+          <div class="page-heading"><div><span class="eyebrow">تحكم بمساحتك</span><h1>الإعدادات</h1><p>اضبط تجربة استخدام StoreMood كما تحب.</p></div></div>
+          <div class="settings-grid">
+            <section class="surface-card setting-card"><div class="setting-title"><span class="small-icon blue"><svg class="icon"><use href="#i-palette"/></svg></span><div><h2>مظهر التطبيق</h2><p>الوضع الفاتح أو الداكن</p></div></div><div class="segment" role="group" aria-label="وضع العرض"><button type="button" data-theme-choice="light">فاتح</button><button type="button" data-theme-choice="dark">داكن</button></div></section>
+            <section class="surface-card setting-card"><div class="setting-title"><span class="small-icon purple"><svg class="icon"><use href="#i-shield"/></svg></span><div><h2>الخصوصية والبيانات</h2><p>بياناتك في المتصفح الحالي فقط</p></div></div><p class="setting-desc">لا يوجد حساب سحابي أو مزامنة. امسح البيانات التجريبية أو أعد تهيئة التطبيق عند الحاجة.</p><button class="btn btn-danger-outline" type="button" id="resetData"><svg class="icon"><use href="#i-trash"/></svg>مسح البيانات المحلية</button></section>
+            <section class="surface-card setting-card wide"><div class="setting-title"><span class="small-icon sky"><svg class="icon"><use href="#i-info"/></svg></span><div><h2>حول StoreMood</h2><p>أحد منتجات TechMood Technology المستقلة</p></div></div><p class="setting-desc">النسخة الأولى نموذج تفاعلي لإدارة اشتراكاتك واستعراض خدمات رقمية. الدفع اليدوي الحقيقي وحسابات العملاء والشركاء وتكامل PayMood ستتاح بعد تأسيس النظام الخلفي.</p></section>
+          </div>
+        </section>
+
+        <footer class="main-footer"><span>StoreMood <b>by TechMood Technology</b></span><span>نسخة MVP تجريبية · لا تُجرى مدفوعات حقيقية</span></footer>
+      </main>
+    </div>
+  </div>
+  <nav class="bottom-nav" aria-label="التنقل على الهاتف">
+    <button type="button" data-page="overview" class="active"><svg class="icon"><use href="#i-home"/></svg><span>الرئيسية</span></button>
+    <button type="button" data-page="subscriptions"><svg class="icon"><use href="#i-calendar"/></svg><span>اشتراكاتي</span></button>
+    <button type="button" data-page="catalog"><svg class="icon"><use href="#i-store"/></svg><span>المتجر</span></button>
+    <button type="button" data-page="orders"><svg class="icon"><use href="#i-bag"/></svg><span>طلباتي</span></button>
+    <button type="button" data-page="notifications"><svg class="icon"><use href="#i-bell"/></svg><span>تنبيهات</span><i id="bottomDot" class="notification-dot" hidden></i></button>
+  </nav>
+
+  <dialog id="appModal" class="modal"></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
