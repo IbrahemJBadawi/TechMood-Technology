@@ -1,3 +1,52 @@
+
+/* Consistent, locally rendered outline icons — no icon font or runtime CDN. */
+const ICON_PATHS={
+ sparkles:'<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="m19 17 .7 1.3L21 19l-1.3.7L19 21l-.7-1.3L17 19l1.3-.7L19 17ZM4 2l.7 1.3L6 4l-1.3.7L4 6l-.7-1.3L2 4l1.3-.7L4 2Z"/>',
+ code:'<path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+ repeat:'<path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/>',
+ chart:'<path d="M3 3v18h18M7 15v3M11 10v8M15 12v6M19 5v13"/>',
+ panels:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12M15 3v6"/>',
+ graduation:'<path d="m2 10 10-5 10 5-10 5-10-5ZM6 12v5c3.8 3 8.2 3 12 0v-5M22 10v6"/>',
+ rocket:'<path d="M4.5 16.5c-1.1.9-1.5 3.2-1.5 4.5 1.3 0 3.6-.4 4.5-1.5M12 6l6 6M5.8 16.8 3 14c0-2.5 1.5-4.3 4.5-4.5 1.5-3.3 5.6-6.3 12.5-6.5 0 6.9-3.2 11.2-6.5 12.5-.2 3-2 4.5-4.5 4.5l-2.8-2.7Z"/><circle cx="14" cy="10" r="1.3"/>',
+ message:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.6 8.6 0 0 1-4-.9L3 21l1.9-5.5a8.5 8.5 0 1 1 16.1-4Z"/><path d="M8 10h9M8 14h6"/>',
+ layers:'<path d="m12 2 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 17l9 5 9-5"/>',
+ shopping:'<path d="m3 9 2 12h14l2-12H3ZM8 10l4-7 4 7M9 14v3M15 14v3"/>',
+ store:'<path d="m3 9 2-6h14l2 6v2a3 3 0 0 1-5 2 3 3 0 0 1-4 0 3 3 0 0 1-4 0 3 3 0 0 1-5-2V9ZM5 15v6h14v-6M10 21v-6h4v6"/>',
+ bag:'<rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/>',
+ wallet:'<rect x="3" y="5" width="18" height="15" rx="3"/><path d="M16 12h5v5h-5a2.5 2.5 0 0 1 0-5Z"/><path d="M4 8V5a2 2 0 0 1 2-2h12"/>',
+ book:'<path d="M12 6c-3.5-2.5-7-2.7-10-2v15c3-.8 6.5-.6 10 2 3.5-2.6 7-2.8 10-2V4c-3-.7-6.5-.5-10 2ZM12 6v15"/>',
+ bookcheck:'<path d="M12 6C8.5 3.5 5 3.3 2 4v15c3-.8 6.5-.6 10 2 3.5-2.6 7-2.8 10-2V4c-3-.7-6.5-.5-10 2ZM12 6v15M15 12l2 2 3-4"/>',
+ heartpulse:'<path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0l-1 1-1-1a5.5 5.5 0 0 0-7.8 7.8l8.8 9 8.8-9a5.5 5.5 0 0 0 0-7.8ZM2 12h5l2-3 3 7 2-4h8"/>',
+ building:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-5h6v5M8 7h1M15 7h1M8 11h1M15 11h1"/>',
+ heart:'<path d="M20.8 4.5a5 5 0 0 0-7.1 0L12 6.2l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 20l8.8-8.4a5 5 0 0 0 0-7.1Z"/><path d="M6 13h3l2-3 2 5 2-2h3"/>',
+ grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+ home:'<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/>',
+ network:'<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-4h14v4"/>',
+ mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/>',
+ fingerprint:'<path d="M5 12V9a7 7 0 0 1 14 0v2M8 16V9a4 4 0 0 1 8 0v6M12 8v9M5 16c0 2 1 4 2 5M16 18c0 1-.5 2-1 3M19 16v1M10 21c1-2 1-4 1-6"/>',
+ bell:'<path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ moon:'<path d="M20.5 14a8.5 8.5 0 0 1-10.5-10.5 8.5 8.5 0 1 0 10.5 10.5Z"/>'
+};
+function lineIcon(name,size=24){
+ const content=ICON_PATHS[name]||ICON_PATHS.sparkles;
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${content}</svg>`;
+}
+const PRODUCT_ICONS={platform:'layers',codemood:'code',growthmood:'graduation',market:'shopping',aljamal:'store',storemood:'bag',paymood:'wallet',halaqati:'book',quranoasis:'bookcheck',healthmood:'heartpulse',peace:'building',impact:'heart'};
+const SERVICE_ICONS=['sparkles','code','repeat','chart','panels','graduation','rocket','message'];
+const ORBIT_ICONS=['sparkles','code','bag','graduation','chart','heart'];
+function enhanceStaticIcons(){
+ document.querySelectorAll('.core-tiles > div > span').forEach((el,i)=>el.innerHTML=lineIcon(['fingerprint','sparkles','bell','network'][i],23));
+ document.querySelectorAll('.bottom-nav a > span').forEach((el,i)=>el.innerHTML=lineIcon(['home','grid','layers','network','mail'][i],23));
+ document.querySelectorAll('.orbit-label').forEach((el,i)=>{
+   const text=el.textContent;
+   el.textContent='';
+   el.insertAdjacentHTML('afterbegin',lineIcon(ORBIT_ICONS[i]||'sparkles',13));
+   const label=document.createElement('span');
+   label.textContent=text;el.appendChild(label);
+ });
+}
+
 /* TechMood Technology — no external JS dependencies, no back-end claims. */
 const PRODUCTS = [
  {id:'platform',group:'education',icon:'✦',color:'blue',alias:'MentorMood',url:'https://techmoodtech.com',ar:'منصة TechMood',en:'TechMood Platform',arDesc:'منصة للتعلّم والتوجيه المهني وربط المهارات بالمشاريع والفرص.',enDesc:'A learning and professional mentoring platform connecting skills, projects and opportunities.'},
@@ -35,7 +84,7 @@ const $ = (id) => document.getElementById(id);
 const t = (key) => TEXT[language][key] ?? key;
 function safeExternal(url){ try {const u = new URL(url);return u.protocol==='https:' ? u.href : ''; }catch{return '';} }
 function renderServices(){
- $('servicesGrid').innerHTML = SERVICE_ITEMS.map(s=>`<article class="service-card"><span class="service-icon" aria-hidden="true">${s.icon}</span><h3>${s[language]}</h3><p>${s[language+'Desc']}</p><a class="service-cta" href="#contact"><span>${t('serviceMore')}</span><span class="round-arrow" aria-hidden="true">↗</span></a></article>`).join('');
+ $('servicesGrid').innerHTML = SERVICE_ITEMS.map((s,i)=>`<article class="service-card"><span class="service-icon" aria-hidden="true">${lineIcon(SERVICE_ICONS[i],25)}</span><h3>${s[language]}</h3><p>${s[language+'Desc']}</p><a class="service-cta" href="#contact"><span>${t('serviceMore')}</span><span class="round-arrow" aria-hidden="true">↗</span></a></article>`).join('');
 }
 function renderFilters(){
  $('filters').innerHTML = Object.entries(t('filters')).map(([key,label])=>`<button type="button" class="filter-btn${selectedGroup===key?' active':''}" data-group="${key}" aria-pressed="${selectedGroup===key}">${label}</button>`).join('');
@@ -51,7 +100,7 @@ function renderProducts(){
  $('productGrid').innerHTML=matches.map(p=>{
   const url=p.url?safeExternal(p.url):'';
   return `<article class="product-card">
-    <div class="card-top"><span class="product-icon" data-color="${p.color}" aria-hidden="true">${p.icon}</span><span class="product-status${url?' live':''}">${url?t('linked'):t('catalog')}</span></div>
+    <div class="card-top"><span class="product-icon" data-color="${p.color}" aria-hidden="true">${lineIcon(PRODUCT_ICONS[p.id],26)}</span><span class="product-status${url?' live':''}">${url?t('linked'):t('catalog')}</span></div>
     <h3>${p[language]}</h3><p class="product-alias" dir="ltr">${p.alias}</p>
     <p class="product-desc">${p[language+'Desc']}</p>
     <div class="product-actions"><button type="button" class="detail-button" data-product="${p.id}">${t('details')} ↗</button>${url?`<a class="external-link" href="${url}" target="_blank" rel="noopener noreferrer">${t('visit')}</a>`:`<span class="external-link" aria-hidden="true">${t('catalog')}</span>`}</div>
@@ -61,7 +110,7 @@ function renderProducts(){
 }
 function showProduct(id){
  const p=PRODUCTS.find(item=>item.id===id);if(!p)return;
- $('dialogIcon').textContent=p.icon;
+ $('dialogIcon').innerHTML=lineIcon(PRODUCT_ICONS[p.id],36);
  $('dialogCategory').textContent=t('filters')[p.group];
  $('dialogTitle').textContent=p[language];
  $('dialogSubtitle').textContent=p.alias;
@@ -79,11 +128,11 @@ function applyLanguage(){
  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const key=el.dataset.i18nHtml;if(typeof t(key)==='string')el.innerHTML=t(key);});
  $('productSearch').placeholder=t('search');$('productSearch').setAttribute('aria-label',t('search'));
  $('dialogClose').setAttribute('aria-label',t('close'));
- renderServices();renderFilters();renderProducts();
+ renderServices();renderFilters();renderProducts();enhanceStaticIcons();
 }
 function setTheme(theme){
  const next=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=next;localStorage.setItem('tm-theme',next);
- $('themeIcon').textContent=next==='dark'?'☀':'☾';
+ $('themeIcon').innerHTML=lineIcon(next==='dark'?'sun':'moon',19);
  document.querySelector('meta[name="theme-color"]').content=next==='dark'?'#070d21':'#f6f8fd';
 }
 $('languageToggle').addEventListener('click',()=>{language=language==='ar'?'en':'ar';localStorage.setItem('tm-language',language);applyLanguage();});
