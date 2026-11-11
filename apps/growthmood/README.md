@@ -6,6 +6,19 @@
 
 https://growthmood.vercel.app/
 
+## Visual identity update (11 November 2026)
+
+GrowthMood retains its own emerald-green identity while borrowing consistent interaction patterns from other TechMood projects:
+
+- `Cairo` Arabic UI font (also used in Halaqati and Quran Oasis); `Plus Jakarta Sans` for English branding and figures.
+- Consistent local, inline outline SVG icon library (`icons.js`) instead of arbitrary unicode glyphs or a network CDN.
+- Softer rounded cards, clearer text contrast, cleaner menus, accessible focus targets and reduced-motion support.
+- Fixed quick-navigation bar on phones, with the full application menu still available.
+- `design-refresh.css` is intentionally layered after `styles.css`; no wholesale rewrite of the original stylesheet.
+- Icon and layout changes are visual; browser-only demo workflows and center boundaries remain unchanged.
+
+The first Vercel deployment succeeded before these visual updates. A subsequent deployment request returned Vercel's daily API deployment quota error (`api-deployments-free-per-day`, HTTP 402). Therefore this visual update is committed on GitHub but is not yet confirmed on the production site.
+
 ## Current delivery
 
 - Responsive Arabic RTL marketing site and administrative workspace.
