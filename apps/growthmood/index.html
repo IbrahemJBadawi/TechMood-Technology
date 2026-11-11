@@ -9,11 +9,14 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/design-refresh.css">
+  <script src="/icons.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
+  <a href="#mainContent" class="skip-link">تخطَّ إلى المحتوى</a>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <div id="landing" class="landing">
     <div class="announcement"><span class="live-dot"></span> GrowthMood من TechMood Technology <span class="announcement-sep">•</span> معاينة تفاعلية أولية</div>
@@ -27,10 +30,10 @@
       </nav>
       <button class="button button-dark" id="landingOpenTop" type="button">استكشف لوحة التحكم <span aria-hidden="true">↗</span></button>
     </header>
-    <main id="top">
+    <main id="top"><span id="mainContent" tabindex="-1"></span>
       <section class="hero container">
         <div class="hero-copy">
-          <span class="eyebrow"><span class="eyebrow-star">✦</span> لأن التدريب الجيد يستحق إدارة أذكى</span>
+          <span class="eyebrow"><span class="eyebrow-star" data-icon="sparkles" aria-hidden="true"></span> لأن التدريب الجيد يستحق إدارة أذكى</span>
           <h1>كل ما يحتاجه مركزك.<br><em>في مكان واحد.</em></h1>
           <p>من أول تسجيل، إلى آخر شهادة. أدر دوراتك ومدربيك ومتدربيك ومواعيدك بسلاسة، وامنح فريقك مساحة أكبر للتركيز على النجاح.</p>
           <div class="hero-actions">
@@ -42,28 +45,28 @@
         <div class="hero-art" aria-label="معاينة تصورية للوحة الإدارة">
           <div class="halo halo-one"></div><div class="halo halo-two"></div>
           <div class="hero-dashboard">
-            <div class="preview-top"><div class="preview-logo">✳</div><div><b>صباح الخير، فريق الأكاديمية 👋</b><small>هذا ملخص نشاط مركزك اليوم</small></div><span class="preview-dots">•••</span></div>
+            <div class="preview-top"><div class="preview-logo" data-icon="chart-column-increasing" aria-hidden="true"></div><div><b>صباح الخير، فريق الأكاديمية 👋</b><small>هذا ملخص نشاط مركزك اليوم</small></div><span class="preview-dots" data-icon="ellipsis" aria-hidden="true"></span></div>
             <div class="preview-stats">
               <div><span>إجمالي المتدربين</span><strong>١٢٨</strong><small class="green-text">↗ +١٢٪ هذا الشهر</small></div>
               <div><span>الدورات النشطة</span><strong>٠٨</strong><small>٤ دورات قادمة</small></div>
             </div>
             <div class="preview-chart"><div class="preview-chart-head"><b>نشاط التسجيلات</b><span>آخر ٧ أيام</span></div><div class="bars"><i style="height:34%"></i><i style="height:62%"></i><i style="height:49%"></i><i style="height:83%"></i><i style="height:55%"></i><i style="height:94%"></i><i style="height:70%"></i></div><div class="bars-labels"><span>س</span><span>ح</span><span>ن</span><span>ث</span><span>ر</span><span>خ</span><span>ج</span></div></div>
-            <div class="preview-event"><span class="event-icon">▣</span><span><b>تصميم تجربة المستخدم</b><small>الساعة 10:00 ص • القاعة 2</small></span><span class="chip chip-green">قريبًا</span></div>
+            <div class="preview-event"><span class="event-icon" data-icon="calendar-days" aria-hidden="true"></span><span><b>تصميم تجربة المستخدم</b><small>الساعة 10:00 ص • القاعة 2</small></span><span class="chip chip-green">قريبًا</span></div>
           </div>
-          <div class="floating-note note-top"><span class="note-icon">✓</span><div><b>حضور مسجل!</b><small>تم تحديث سجل الحضور</small></div></div>
-          <div class="floating-note note-bottom"><span class="note-icon note-yellow">★</span><div><b>شهادة جديدة</b><small>إنجاز يستحق الاحتفال</small></div></div>
+          <div class="floating-note note-top"><span class="note-icon" data-icon="check" aria-hidden="true"></span><div><b>حضور مسجل!</b><small>تم تحديث سجل الحضور</small></div></div>
+          <div class="floating-note note-bottom"><span class="note-icon note-yellow" data-icon="award" aria-hidden="true"></span><div><b>شهادة جديدة</b><small>إنجاز يستحق الاحتفال</small></div></div>
         </div>
       </section>
       <section class="partner-strip"><div class="container partner-inner"><span>منصة واحدة لإدارة</span><b>مراكز التدريب</b><b>المعاهد</b><b>الأكاديميات</b><b>المدربين المستقلين</b></div></section>
       <section class="section container" id="features">
         <div class="section-heading"><span class="section-kicker">مركزك تحت السيطرة</span><h2>إدارة أسهل. <em>نتائج أكبر.</em></h2><p>كل الأدوات اليومية التي يحتاجها مركزك، مصممة لتعمل معًا بانسجام.</p></div>
         <div class="feature-grid">
-          <article class="feature-card"><span class="feature-icon mint">▤</span><h3>الدورات والبرامج</h3><p>أنشئ الدورات، نظّم المجموعات وحدّد المدربين والمقاعد والمواعيد.</p><span>01 / Courses</span></article>
-          <article class="feature-card"><span class="feature-icon peach">♙</span><h3>المتدربون والمدربون</h3><p>نظّم ملفات الأشخاص والتسجيلات، واعرف كل ما يخص رحلتهم التدريبية.</p><span>02 / People</span></article>
-          <article class="feature-card"><span class="feature-icon lilac">◷</span><h3>الجداول والحضور</h3><p>جدول واضح للحصص، مع تسجيل سهل لحضور المتدربين وغيابهم.</p><span>03 / Schedule</span></article>
-          <article class="feature-card"><span class="feature-icon blue">◈</span><h3>تقارير مفيدة</h3><p>قرارات مبنية على الأرقام: الدورات والتسجيل والحضور ومؤشرات الأداء.</p><span>04 / Reports</span></article>
-          <article class="feature-card"><span class="feature-icon yellow">♢</span><h3>الشهادات</h3><p>سجّل استحقاقات المتدربين، وتابع إصدار الشهادات في مكان واحد.</p><span>05 / Certificates</span></article>
-          <article class="feature-card"><span class="feature-icon silver">♙</span><h3>المراكز والفروع</h3><p>نظّم فروع المؤسسة وهيكلها، مع تصميم مخصص للفصل بين المراكز.</p><span>06 / Multi-center</span></article>
+          <article class="feature-card"><span class="feature-icon mint" data-icon="book-open" aria-hidden="true"></span><h3>الدورات والبرامج</h3><p>أنشئ الدورات، نظّم المجموعات وحدّد المدربين والمقاعد والمواعيد.</p><span>01 / Courses</span></article>
+          <article class="feature-card"><span class="feature-icon peach" data-icon="users" aria-hidden="true"></span><h3>المتدربون والمدربون</h3><p>نظّم ملفات الأشخاص والتسجيلات، واعرف كل ما يخص رحلتهم التدريبية.</p><span>02 / People</span></article>
+          <article class="feature-card"><span class="feature-icon lilac" data-icon="calendar-days" aria-hidden="true"></span><h3>الجداول والحضور</h3><p>جدول واضح للحصص، مع تسجيل سهل لحضور المتدربين وغيابهم.</p><span>03 / Schedule</span></article>
+          <article class="feature-card"><span class="feature-icon blue" data-icon="chart-column-increasing" aria-hidden="true"></span><h3>تقارير مفيدة</h3><p>قرارات مبنية على الأرقام: الدورات والتسجيل والحضور ومؤشرات الأداء.</p><span>04 / Reports</span></article>
+          <article class="feature-card"><span class="feature-icon yellow" data-icon="award" aria-hidden="true"></span><h3>الشهادات</h3><p>سجّل استحقاقات المتدربين، وتابع إصدار الشهادات في مكان واحد.</p><span>05 / Certificates</span></article>
+          <article class="feature-card"><span class="feature-icon silver" data-icon="building-2" aria-hidden="true"></span><h3>المراكز والفروع</h3><p>نظّم فروع المؤسسة وهيكلها، مع تصميم مخصص للفصل بين المراكز.</p><span>06 / Multi-center</span></article>
         </div>
       </section>
       <section class="section how-section" id="steps"><div class="container how-wrap">
@@ -75,29 +78,36 @@
         <article class="plan-card featured-plan"><span class="popular">الأكثر ملاءمة للمراكز</span><span class="plan-label">للمراكز النامية</span><h3>Growth</h3><p>للفرق التي تدير عدة دورات وتحتاج رؤية أوضح.</p><ul><li>إدارة الدورات والمدربين</li><li>الفروع والموظفون</li><li>التقارير والصلاحيات</li></ul><button class="button button-lime" data-open-app>جرّب لوحة الإدارة ←</button></article>
         <article class="plan-card"><span class="plan-label">للمؤسسات</span><h3>Enterprise</h3><p>للمؤسسات الأكبر التي تحتاج حدودًا وخدمات مخصصة.</p><ul><li>هيكل متعدد الفروع</li><li>تقارير متقدمة</li><li>تكاملات مستقبلية</li></ul><button class="button button-outline" data-open-app>استكشف الميزات ←</button></article></div>
       </section>
-      <section class="closing-cta container"><span>✳</span><h2>مستقبل مركزك<br>يبدأ بتنظيم أفضل.</h2><p>استكشف كيف يمكن أن تبدو إدارة التدريب عندما تصبح كل التفاصيل في مكان واحد.</p><button class="button button-lime button-large" id="landingOpenBottom">استكشف GrowthMood ←</button></section>
+      <section class="closing-cta container"><span data-icon="sparkles" aria-hidden="true"></span><h2>مستقبل مركزك<br>يبدأ بتنظيم أفضل.</h2><p>استكشف كيف يمكن أن تبدو إدارة التدريب عندما تصبح كل التفاصيل في مكان واحد.</p><button class="button button-lime button-large" id="landingOpenBottom">استكشف GrowthMood ←</button></section>
     </main>
-    <footer class="site-footer container"><a class="brand" href="#top"><span class="brand-mark small-mark">✳</span><span class="brand-name" dir="ltr">Growth<span>Mood</span></span></a><p>منتج ضمن منظومة <strong>TechMood Technology</strong></p><span>© 2026 TechMood Technology</span></footer>
+    <footer class="site-footer container"><a class="brand" href="#top"><span class="brand-mark small-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 25V13c0-3 2-5 5-5h12c3 0 5 2 5 5v8c0 7-5 12-12 12-6 0-10-4-10-9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M18 23l5-6 4 3 5-8" fill="none" stroke="#b6ee7b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name" dir="ltr">Growth<span>Mood</span></span></a><p>منتج ضمن منظومة <strong>TechMood Technology</strong></p><span>© 2026 TechMood Technology</span></footer>
   </div>
   <div id="app" class="app-shell is-hidden">
     <div class="mobile-overlay" id="mobileOverlay"></div>
     <aside class="sidebar" id="sidebar">
-      <div class="side-brand"><span class="side-brand-icon">✳</span><span dir="ltr">Growth<span>Mood</span><small>WORKSPACE</small></span></div>
-      <div class="workspace-switch"><span class="workspace-icon">◈</span><div><small>مساحة العمل الحالية</small><strong id="sidebarCenterName">أكاديمية الريادة</strong></div><span class="chevron">⌄</span></div>
+      <div class="side-brand"><span class="side-brand-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 25V13c0-3 2-5 5-5h12c3 0 5 2 5 5v8c0 7-5 12-12 12-6 0-10-4-10-9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M18 23l5-6 4 3 5-8" fill="none" stroke="#b6ee7b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span dir="ltr">Growth<span>Mood</span><small>WORKSPACE</small></span></div>
+      <div class="workspace-switch"><span class="workspace-icon" data-icon="building-2" aria-hidden="true"></span><div><small>مساحة العمل الحالية</small><strong id="sidebarCenterName">أكاديمية الريادة</strong></div><span class="chevron" data-icon="chevron-down" aria-hidden="true"></span></div>
       <div class="side-group-label">مساحة العمل</div>
       <nav class="side-nav" id="sideNav" aria-label="أقسام لوحة التحكم"></nav>
-      <div class="side-bottom"><div class="demo-alert"><span>◉</span><div><b>وضع المعاينة</b><p>بياناتك هنا محلية على الجهاز وليست حسابًا سحابيًا.</p></div></div><button class="side-exit" id="exitApp" type="button">↗ <span>العودة للموقع</span></button></div>
+      <div class="side-bottom"><div class="demo-alert"><span data-icon="info" aria-hidden="true"></span><div><b>وضع المعاينة</b><p>بياناتك هنا محلية على الجهاز وليست حسابًا سحابيًا.</p></div></div><button class="side-exit" id="exitApp" type="button"><span data-icon="arrow-up-right" aria-hidden="true"></span><span>العودة للموقع</span></button></div>
     </aside>
-    <div class="app-main">
+    <div class="app-main" id="appMainContent">
       <header class="app-header">
-        <div class="header-right"><button class="menu-button" id="mobileMenu" aria-label="فتح القائمة" type="button">☰</button><div class="breadcrumb"><span>مساحة العمل</span><span>/</span><strong id="currentPageName">لوحة التحكم</strong></div></div>
-        <div class="header-left"><span class="app-demo-pill">● معاينة تجريبية</span><label class="switch-center-label" for="centerSelector">المركز</label><select id="centerSelector" aria-label="تبديل المركز التجريبي"></select><span class="header-avatar" title="مدير المركز">م</span></div>
+        <div class="header-right"><button class="menu-button" id="mobileMenu" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sidebar" type="button"><span data-icon="menu" aria-hidden="true"></span></button><div class="breadcrumb"><span>مساحة العمل</span><span>/</span><strong id="currentPageName">لوحة التحكم</strong></div></div>
+        <div class="header-left"><span class="app-demo-pill">● معاينة تجريبية</span><label class="switch-center-label" for="centerSelector">المركز</label><select id="centerSelector" aria-label="تبديل المركز التجريبي"></select><button class="header-info" id="demoInfo" type="button" title="معلومات المعاينة" aria-label="معلومات المعاينة"><span data-icon="info" aria-hidden="true"></span></button><span class="header-avatar" title="مدير المركز">م</span></div>
       </header>
       <div class="page-body"><div id="page"></div></div>
     </div>
+    <nav class="bottom-nav" aria-label="التنقل السريع للهاتف">
+      <button type="button" class="bottom-link active" data-nav="dashboard"><span data-icon="layout-dashboard" aria-hidden="true"></span><span>الرئيسية</span></button>
+      <button type="button" class="bottom-link" data-nav="courses"><span data-icon="book-open" aria-hidden="true"></span><span>الدورات</span></button>
+      <button type="button" class="bottom-link" data-nav="trainees"><span data-icon="users" aria-hidden="true"></span><span>المتدربون</span></button>
+      <button type="button" class="bottom-link" data-nav="attendance"><span data-icon="clipboard-check" aria-hidden="true"></span><span>الحضور</span></button>
+      <button type="button" class="bottom-link" id="bottomMore" aria-label="المزيد من الأقسام"><span data-icon="menu" aria-hidden="true"></span><span>المزيد</span></button>
+    </nav>
   </div>
   <div class="modal-backdrop is-hidden" id="modalBackdrop" role="presentation">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><header class="modal-head"><div><span class="modal-kicker">GrowthMood</span><h2 id="modalTitle">إضافة عنصر</h2></div><button class="icon-close" type="button" id="closeModal" aria-label="إغلاق">×</button></header><div id="modalContent"></div></div>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><header class="modal-head"><div><span class="modal-kicker">GrowthMood</span><h2 id="modalTitle">إضافة عنصر</h2></div><button class="icon-close" type="button" id="closeModal" aria-label="إغلاق"><span data-icon="x" aria-hidden="true"></span></button></header><div id="modalContent"></div></div>
   </div>
 </body>
 </html>
