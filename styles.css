@@ -53,3 +53,31 @@ html[data-theme="dark"] .core-node img{filter:drop-shadow(0 4px 9px rgba(0,163,2
 @media(prefers-reduced-motion:reduce){
  .brand-icon,.footer-brand img,.core-node img,.orbit-logo img,.product-icon,.service-icon{transition:none!important}
 }
+
+/* Display the complete registered-style company name next to the approved mark. */
+.brand-company-name {
+ display:inline-block;
+ direction:ltr;
+ unicode-bidi:isolate;
+ white-space:nowrap;
+ font:850 clamp(14px,1.5vw,19px)/1.2 "Inter",system-ui,sans-serif;
+ letter-spacing:-.04em;
+ color:var(--ink);
+}
+.site-header .brand{gap:7px;min-width:0}
+.footer-brand{gap:10px}
+.footer-brand .brand-company-name{font-size:19px}
+html[data-theme="dark"] .brand-company-name{color:#f2f7ff}
+@media(max-width:630px){
+ .site-header .brand-icon{width:35px;height:35px}
+ .site-header .brand{gap:5px}
+ .site-header .brand-company-name{font-size:clamp(11px,3.35vw,14px);letter-spacing:-.055em}
+ .footer-brand .brand-company-name{font-size:17px}
+}
+@media(max-width:360px){
+ .site-header .brand-icon{width:31px;height:31px}
+ .site-header .brand-company-name{font-size:11px}
+ .nav-inner{gap:6px}
+ .nav-actions{gap:4px}
+ .nav-actions .icon-btn{width:33px;height:33px}
+}
