@@ -1,26 +1,27 @@
 /* GrowthMood interactive preview — browser-only sample data.
  * This is NOT production authentication, multi-tenant isolation or a database.
- * See README and supabase/schema.sql for production backend requirements.
+ * See README and ../growthmood-backend/schema.sql for production backend requirements.
  */
 (function(){
 "use strict";
 var STORAGE_KEY="growthmood_demo_v1";
 var activeCenter="c1", activePage="dashboard", q="", state={};
 var nav=[
- ["dashboard","▦","لوحة التحكم"],
- ["courses","▤","الدورات والبرامج"],
- ["trainees","♙","المتدربون"],
- ["trainers","♧","المدربون"],
- ["schedule","◷","الجداول والحصص"],
- ["attendance","☑","الحضور والغياب"],
- ["branches","◈","الفروع"],
- ["certificates","♢","الشهادات"],
- ["reports","▥","التقارير"],
- ["subscriptions","✧","الاشتراكات"],
- ["settings","⚙","الإعدادات"]
+ ["dashboard","layout-dashboard","لوحة التحكم"],
+ ["courses","book-open","الدورات والبرامج"],
+ ["trainees","users","المتدربون"],
+ ["trainers","presentation","المدربون"],
+ ["schedule","calendar-days","الجداول والحصص"],
+ ["attendance","clipboard-check","الحضور والغياب"],
+ ["branches","building-2","الفروع"],
+ ["certificates","award","الشهادات"],
+ ["reports","chart-column-increasing","التقارير"],
+ ["subscriptions","credit-card","الاشتراكات"],
+ ["settings","settings-2","الإعدادات"]
 ];
 var els={landing:document.getElementById("landing"),app:document.getElementById("app"),page:document.getElementById("page"),sideNav:document.getElementById("sideNav"),selector:document.getElementById("centerSelector"),modal:document.getElementById("modalBackdrop"),toast:document.getElementById("toast")};
 var ids=0;
+function gmIcon(name){return window.GMIcons?window.GMIcons.svg(name):''}
 function uid(){ids+=1;return "id"+Date.now().toString(36)+ids.toString(36)}
 function esc(s){return String(s===null||s===undefined?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function dayPlus(n){var d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -54,8 +55,20 @@ function center(){return state.centers.find(function(c){return c.id===activeCent
 function countFor(courseId){return scoped("enrollments").filter(function(e){return e.courseId===courseId}).length}
 function toast(msg){els.toast.textContent=msg;els.toast.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){els.toast.classList.remove("show")},3400)}
 function selectorRender(){els.selector.innerHTML=state.centers.map(function(c){return '<option value="'+esc(c.id)+'"'+(c.id===activeCenter?" selected":"")+'>'+esc(c.name)+'</option>'}).join("");document.getElementById("sidebarCenterName").textContent=center().name}
-function navRender(){els.sideNav.innerHTML=nav.map(function(item){return '<button type="button" class="side-link'+(item[0]===activePage?" active":"")+'" data-nav="'+item[0]+'"><span class="side-ico">'+item[1]+'</span>'+item[2]+'</button>'}).join("")}
-function closeMenu(){document.getElementById("sidebar").classList.remove("open");document.getElementById("mobileOverlay").classList.remove("visible")}
+function navRender(){
+ els.sideNav.innerHTML=nav.map(function(item){
+  var selected=item[0]===activePage;
+  return '<button type="button" class="side-link'+(selected?' active':'')+'" data-nav="'+item[0]+'" aria-current="'+(selected?'page':'false')+'"><span class="side-ico">'+gmIcon(item[1])+'</span>'+item[2]+'</button>'
+ }).join("");
+ document.querySelectorAll(".bottom-nav [data-nav]").forEach(function(btn){
+  var selected=btn.dataset.nav===activePage;
+  btn.classList.toggle("active",selected);
+  btn.setAttribute("aria-current",selected?"page":"false");
+ });
+ var more=document.getElementById("bottomMore");
+ if(more)more.classList.toggle("active",!["dashboard","courses","trainees","attendance"].includes(activePage));
+}
+function closeMenu(){document.getElementById("sidebar").classList.remove("open");document.getElementById("mobileOverlay").classList.remove("visible");document.getElementById("mobileMenu").setAttribute("aria-expanded","false")}
 function openApp(push){els.landing.classList.add("is-hidden");els.app.classList.remove("is-hidden");if(push!==false)history.replaceState(null,"","#demo");window.scrollTo(0,0);render()}
 function exitApp(){els.app.classList.add("is-hidden");els.landing.classList.remove("is-hidden");history.replaceState(null,"",location.pathname);closeMenu();window.scrollTo(0,0)}
 function navigate(page){if(!nav.some(function(n){return n[0]===page}))return;activePage=page;q="";navRender();document.getElementById("currentPageName").textContent=nav.find(function(n){return n[0]===page})[2];closeMenu();render();window.scrollTo(0,0)}
@@ -63,8 +76,10 @@ function bind(){
  ["landingOpenTop","landingOpenHero","landingOpenSteps","landingOpenBottom"].forEach(function(id){document.getElementById(id).addEventListener("click",function(){openApp()})});
  document.querySelectorAll("[data-open-app]").forEach(function(n){n.addEventListener("click",function(){openApp()})});
  document.getElementById("exitApp").addEventListener("click",exitApp);
- document.getElementById("mobileMenu").addEventListener("click",function(){document.getElementById("sidebar").classList.toggle("open");document.getElementById("mobileOverlay").classList.toggle("visible")});
+ document.getElementById("mobileMenu").addEventListener("click",function(){var isOpen=document.getElementById("sidebar").classList.toggle("open");document.getElementById("mobileOverlay").classList.toggle("visible",isOpen);this.setAttribute("aria-expanded",String(isOpen))});
  document.getElementById("mobileOverlay").addEventListener("click",closeMenu);
+ document.getElementById("bottomMore").addEventListener("click",function(){document.getElementById("mobileMenu").click()});
+ document.getElementById("demoInfo").addEventListener("click",function(){toast("هذه معاينة تفاعلية؛ تُحفظ البيانات داخل متصفحك فقط. لا تستخدم بيانات حقيقية.")});
  els.selector.addEventListener("change",function(e){var next=e.target.value;if(!state.centers.some(function(c){return c.id===next}))return;activeCenter=next;selectorRender();render();toast("تم الانتقال إلى بيانات "+center().name+" داخل هذه المعاينة فقط")});
  document.getElementById("closeModal").addEventListener("click",closeModal);
  els.modal.addEventListener("click",function(e){if(e.target===els.modal)closeModal()});
@@ -89,28 +104,28 @@ function onClick(e){
 }
 function pageHead(title,subtitle,btnLabel,kind){return '<div class="page-head"><div><h1>'+esc(title)+'</h1><p>'+esc(subtitle)+'</p></div>'+(btnLabel?'<div class="page-actions"><button class="app-btn primary" data-add="'+kind+'">＋ '+esc(btnLabel)+'</button></div>':"")+'</div>'}
 function status(s){var map={active:["نشطة",""],draft:["مسودة","draft"],completed:["مكتملة","done"],present:["حاضر",""],absent:["غائب","absent"],excused:["بعذر","draft"]};var v=map[s]||["غير محدد","muted"];return '<span class="status '+v[1]+'">'+v[0]+'</span>'}
-function textEmpty(title,description){return '<div class="empty"><span class="empty-icon">✳</span><b>'+esc(title)+'</b><p>'+esc(description||"يمكنك إضافة أول عنصر من زر الإضافة.")+'</p></div>'}
-function render(){if(!activeCenter){els.page.innerHTML=textEmpty("لا يوجد مركز","أنشئ مركزًا لتبدأ");return}var views={dashboard:dashboard,courses:courses,trainees:trainees,trainers:trainers,schedule:schedule,attendance:attendance,branches:branches,certificates:certificates,reports:reports,subscriptions:subscriptions,settings:settings};els.page.innerHTML=(views[activePage]||dashboard)();filterRows()}
-function cardKpi(icon,label,value,sub,cls){return '<div class="kpi"><div class="kpi-top"><span class="kpi-label">'+esc(label)+'</span><span class="kpi-icon '+(cls||"")+'">'+icon+'</span></div><strong>'+num(value)+'</strong><small>'+esc(sub)+'</small></div>'}
+function textEmpty(title,description){return '<div class="empty"><span class="empty-icon">'+gmIcon("sparkles")+'</span><b>'+esc(title)+'</b><p>'+esc(description||"يمكنك إضافة أول عنصر من زر الإضافة.")+'</p></div>'}
+function render(){if(!activeCenter){els.page.innerHTML=textEmpty("لا يوجد مركز","أنشئ مركزًا لتبدأ");return}var views={dashboard:dashboard,courses:courses,trainees:trainees,trainers:trainers,schedule:schedule,attendance:attendance,branches:branches,certificates:certificates,reports:reports,subscriptions:subscriptions,settings:settings};els.page.innerHTML=(views[activePage]||dashboard)();if(window.GMIcons)window.GMIcons.hydrate(els.page);filterRows()}
+function cardKpi(icon,label,value,sub,cls){return '<div class="kpi"><div class="kpi-top"><span class="kpi-label">'+esc(label)+'</span><span class="kpi-icon '+(cls||"")+'">'+gmIcon(icon)+'</span></div><strong>'+num(value)+'</strong><small>'+esc(sub)+'</small></div>'}
 function upcoming(){return scoped("sessions").filter(function(s){return s.date>=dayPlus(0)}).sort(function(a,b){return(a.date+a.time).localeCompare(b.date+b.time)}).slice(0,4)}
 function dashboard(){
  var tr=scoped("trainees"),cr=scoped("courses"),s=scoped("sessions"),e=scoped("enrollments");
  var series=[28,53,42,71,59,86,68];var n=e.length;series=series.map(function(v,i){return n?Math.min(98,Math.max(12,Math.round(v*n/6))):6});
  var sessions=upcoming();
- return '<div class="page-head"><div><h1>صباح الخير، فريق '+esc(center().name)+' 👋</h1><p>مساحة موحّدة لمتابعة مركزك، وخطوات يومية أوضح لفريقك.</p></div><div class="page-actions"><button class="app-btn" data-switch="reports">▥ التقارير</button><button class="app-btn primary" data-add="course">＋ دورة جديدة</button></div></div>'+
- '<div class="overview-greeting"><div><h2>كل إنجاز يبدأ بتنظيم جيد ✨</h2><p>اطّلع على الدورات والحصص القريبة، ونظّم يوم فريقك بثقة.</p></div><span class="sparkle">✳</span></div>'+
- '<div class="kpi-grid">'+cardKpi("♙","إجمالي المتدربين",tr.length,"المسجّلون في مركزك")+
- cardKpi("▤","الدورات النشطة",cr.filter(function(x){return x.status==="active"}).length,"من "+num(cr.length)+" دورة","orange")+
- cardKpi("✦","إجمالي التسجيلات",e.length,"عبر الدورات","purple")+
- cardKpi("◷","الحصص المجدولة",s.length,"منها "+num(sessions.length)+" قادمة","blue")+'</div>'+
- '<div class="panel-grid"><div class="panel"><div class="panel-head"><h3>لمحة عن النشاط</h3><small>مخطط توضيحي داخل المعاينة</small></div><div class="revenue-chart">'+series.map(function(v){return '<div><i style="height:'+v+'%"></i></div>'}).join("")+'</div><div class="chart-axis"><span>السبت</span><span>الأحد</span><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span></div></div>'+
+ return '<div class="page-head"><div><h1>صباح الخير، فريق '+esc(center().name)+' 👋</h1><p>مساحة موحّدة لمتابعة مركزك، وخطوات يومية أوضح لفريقك.</p></div><div class="page-actions"><button class="app-btn" data-switch="reports">'+gmIcon("chart-column-increasing")+' التقارير</button><button class="app-btn primary" data-add="course">'+gmIcon("plus")+' دورة جديدة</button></div></div>'+
+ '<div class="overview-greeting"><div><h2>كل إنجاز يبدأ بتنظيم جيد ✨</h2><p>اطّلع على الدورات والحصص القريبة، ونظّم يوم فريقك بثقة.</p></div><span class="sparkle">'+gmIcon("sparkles")+'</span></div>'+
+ '<div class="kpi-grid">'+cardKpi("users","إجمالي المتدربين",tr.length,"المسجّلون في مركزك")+
+ cardKpi("book-open","الدورات النشطة",cr.filter(function(x){return x.status==="active"}).length,"من "+num(cr.length)+" دورة","orange")+
+ cardKpi("graduation-cap","إجمالي التسجيلات",e.length,"عبر الدورات","purple")+
+ cardKpi("calendar-days","الحصص المجدولة",s.length,"منها "+num(sessions.length)+" قادمة","blue")+'</div>'+
+ '<div class="panel-grid"><div class="panel"><div class="panel-head"><h3>لمحة عن النشاط</h3><small>بيانات عرض توضيحية</small></div><div class="revenue-chart">'+series.map(function(v){return '<div><i style="height:'+v+'%"></i></div>'}).join("")+'</div><div class="chart-axis"><span>السبت</span><span>الأحد</span><span>الإثنين</span><span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span></div></div>'+
  '<div class="panel"><div class="panel-head"><h3>الحصص القادمة</h3><button class="mini-link" data-switch="schedule">كل الحصص ←</button></div><div class="upcoming-list">'+(sessions.length?sessions.map(function(x){var d=shortDay(x.date);var c=find("courses",x.courseId);return '<div class="upcoming-item"><div class="datebox"><b>'+d.number+'</b><span>'+d.month+'</span></div><div><strong>'+esc(c?c.title:"دورة غير متاحة")+'</strong><small>'+esc(x.time)+' • '+esc(x.room||"قاعة التدريب")+'</small></div></div>'}).join(""):textEmpty("لا حصص قادمة","أضف جلسة تدريبية جديدة"))+'</div></div></div>'+
  '<div class="panel"><div class="panel-head"><h3>الدورات الجارية</h3><button class="mini-link" data-switch="courses">إدارة الدورات ←</button></div>'+courseTable(cr.slice(0,5))+'</div>';
 }
 function courseTable(items){if(!items.length)return textEmpty("لا توجد دورات");return '<div class="table-wrap"><table class="data-table"><thead><tr><th>الدورة</th><th>المدرب</th><th>المقاعد</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>'+items.map(function(c){var trainer=find("trainers",c.trainerId);var enrolled=countFor(c.id);return '<tr data-search="'+esc(c.title+" "+(trainer?trainer.name:""))+'"><td><strong>'+esc(c.title)+'</strong><span class="subtext">'+esc(c.category||"تدريب")+'</span></td><td>'+esc(trainer?trainer.name:"غير معيّن")+'</td><td>'+num(enrolled)+' / '+num(c.capacity)+'</td><td>'+status(c.status)+'</td><td><button class="app-btn small" data-enroll="'+esc(c.id)+'">تسجيل متدرب</button></td></tr>'}).join("")+'</tbody></table></div>'}
 function courses(){var items=scoped("courses");return pageHead("الدورات والبرامج","أنشئ الدورات، وحدّد المدربين، وتابع التسجيل والمقاعد المتاحة.","إضافة دورة","course")+
  '<div class="toolbar"><input class="search-field" id="tableSearch" type="search" aria-label="البحث في الدورات" placeholder="⌕ ابحث عن دورة..." value="'+esc(q)+'"><span class="table-summary">'+num(items.length)+' دورات</span></div>'+
- (items.length?'<div class="cards-grid">'+items.map(function(c){var count=countFor(c.id),cap=Math.max(1,Number(c.capacity)||1),trainer=find("trainers",c.trainerId);return '<article class="course-card" data-search="'+esc(c.title+" "+c.category+" "+(trainer?trainer.name:""))+'"><div class="course-cover"><span>▤</span>'+status(c.status)+'</div><div class="course-body"><small style="color:#6d9b7a">'+esc(c.category||"برنامج تدريبي")+'</small><h3>'+esc(c.title)+'</h3><p>♙ '+esc(trainer?trainer.name:"لم يُحدّد مدرب بعد")+'</p><div class="progress-label"><span>التسجيلات</span><span>'+num(count)+' / '+num(cap)+'</span></div><div class="progress-track"><div class="progress-fill" style="width:'+Math.min(100,Math.round(count/cap*100))+'%"></div></div><div class="course-foot"><span>'+num(c.price||0)+' $ <small style="color:#93a496">سعر توضيحي</small></span><button class="app-btn small" data-enroll="'+esc(c.id)+'">＋ تسجيل</button></div></div></article>'}).join("")+'</div>':textEmpty("لا توجد دورات","أضف دورتك الأولى من الأعلى."))}
+ (items.length?'<div class="cards-grid">'+items.map(function(c){var count=countFor(c.id),cap=Math.max(1,Number(c.capacity)||1),trainer=find("trainers",c.trainerId);return '<article class="course-card" data-search="'+esc(c.title+" "+c.category+" "+(trainer?trainer.name:""))+'"><div class="course-cover"><span>'+gmIcon("book-open")+'</span>'+status(c.status)+'</div><div class="course-body"><small style="color:#6d9b7a">'+esc(c.category||"برنامج تدريبي")+'</small><h3>'+esc(c.title)+'</h3><p>♙ '+esc(trainer?trainer.name:"لم يُحدّد مدرب بعد")+'</p><div class="progress-label"><span>التسجيلات</span><span>'+num(count)+' / '+num(cap)+'</span></div><div class="progress-track"><div class="progress-fill" style="width:'+Math.min(100,Math.round(count/cap*100))+'%"></div></div><div class="course-foot"><span>'+num(c.price||0)+' $ <small style="color:#93a496">سعر توضيحي</small></span><button class="app-btn small" data-enroll="'+esc(c.id)+'">＋ تسجيل</button></div></div></article>'}).join("")+'</div>':textEmpty("لا توجد دورات","أضف دورتك الأولى من الأعلى."))}
 function trainees(){var items=scoped("trainees");return pageHead("المتدربون","ملفات المتدربين والتسجيلات داخل مركزك فقط.","إضافة متدرب","trainee")+
  '<div class="toolbar"><input class="search-field" id="tableSearch" type="search" placeholder="⌕ ابحث عن متدرب..." aria-label="البحث في المتدربين" value="'+esc(q)+'"><span class="table-summary">'+num(items.length)+' متدربين</span></div><div class="panel">'+(items.length?'<div class="table-wrap"><table class="data-table"><thead><tr><th>المتدرب</th><th>البريد</th><th>الهاتف</th><th>الدورات المسجّل بها</th><th>تاريخ الإضافة</th></tr></thead><tbody>'+items.map(function(u){var count=scoped("enrollments").filter(function(e){return e.traineeId===u.id}).length;return '<tr data-search="'+esc(u.name+" "+u.email+" "+u.phone)+'"><td><span class="item-person"><span class="avatar-circle">'+esc(u.name.slice(0,1))+'</span><strong>'+esc(u.name)+'</strong></span></td><td dir="ltr">'+esc(u.email||"—")+'</td><td dir="ltr">'+esc(u.phone||"—")+'</td><td>'+num(count)+'</td><td>'+dateLabel(u.joinedAt)+'</td></tr>'}).join("")+'</tbody></table></div>':textEmpty("لا يوجد متدربون"))+'</div>'}
 function trainers(){var items=scoped("trainers");return pageHead("المدربون","تعرّف على فريق التدريب وتخصصاتهم ودوراتهم المسندة.","إضافة مدرب","trainer")+
@@ -124,7 +139,7 @@ function branches(){var items=scoped("branches");return pageHead("الفروع",
  (items.length?'<div class="cards-grid">'+items.map(function(b){return '<article class="panel"><div class="kpi-icon">⌂</div><h3 style="font-size:15px;margin-bottom:4px">'+esc(b.name)+'</h3><p style="font-size:12px;color:#8a9a8d">'+esc(b.city||center().city)+' • '+esc(b.address||"")+'</p><span class="small-pill">'+num(scoped("sessions").filter(function(s){return s.branchId===b.id}).length)+' حصص مجدولة</span></article>'}).join("")+'</div>':textEmpty("لا توجد فروع"))}
 function certificates(){var items=scoped("certificates");return pageHead("الشهادات","سجّل شهادات التدريب وتابع بيانات إصدارها في المعاينة.","إضافة شهادة تجريبية","certificate")+
  '<div class="warning">الشهادات هنا تجريبية ولا تثبت إتمام تدريب أو اعتمادًا رسميًا. إصدار الشهادة المعتمدة يتطلب التحقق من شروط الإنجاز وهويات المستفيدين.</div>'+
- (items.length?'<div class="cards-grid">'+items.map(function(cert){var u=find("trainees",cert.traineeId),c=find("courses",cert.courseId);return '<article class="cert-card"><span class="cert-symbol">✹</span><h3>شهادة إتمام تدريب (معاينة)</h3><p>المتدرب: <b>'+esc(u?u.name:"غير معروف")+'</b><br>الدورة: '+esc(c?c.title:"—")+'</p><small>'+dateLabel(cert.issuedAt)+'</small><div style="margin-top:12px"><button class="app-btn small" data-show-cert="'+esc(cert.id)+'">عرض الشهادة</button></div></article>'}).join("")+'</div>':textEmpty("لا توجد شهادات تجريبية","يمكن إنشاء سجل شهادة من تسجيل قائم."))}
+ (items.length?'<div class="cards-grid">'+items.map(function(cert){var u=find("trainees",cert.traineeId),c=find("courses",cert.courseId);return '<article class="cert-card"><span class="cert-symbol">'+gmIcon("award")+'</span><h3>شهادة إتمام تدريب (معاينة)</h3><p>المتدرب: <b>'+esc(u?u.name:"غير معروف")+'</b><br>الدورة: '+esc(c?c.title:"—")+'</p><small>'+dateLabel(cert.issuedAt)+'</small><div style="margin-top:12px"><button class="app-btn small" data-show-cert="'+esc(cert.id)+'">عرض الشهادة</button></div></article>'}).join("")+'</div>':textEmpty("لا توجد شهادات تجريبية","يمكن إنشاء سجل شهادة من تسجيل قائم."))}
 function reports(){
  var cr=scoped("courses"),en=scoped("enrollments"),tr=scoped("trainees"),at=scoped("attendance");
  var present=at.filter(function(a){return a.status==="present"}).length;
@@ -133,9 +148,9 @@ function reports(){
  var items=cr.map(function(c){return {name:c.title,count:countFor(c.id)}}).sort(function(a,b){return b.count-a.count});
  var max=Math.max(1,...items.map(function(x){return x.count}));
  return pageHead("التقارير والتحليلات","مؤشرات مستمدة من سجلات المعاينة داخل المركز المحدد فقط.")+
- '<div class="page-actions" style="margin-bottom:18px"><button class="app-btn" data-export="yes">↓ تصدير CSV للتسجيلات</button></div>'+
+ '<div class="page-actions" style="margin-bottom:18px"><button class="app-btn" data-export="yes">'+gmIcon("file-down")+' تصدير CSV للتسجيلات</button></div>'+
  '<div class="warning">قيمة التسجيلات تقديرية (السعر × عدد التسجيلات)، وليست مدفوعات محصّلة. لا توجد بوابة دفع متصلة.</div>'+
- '<div class="kpi-grid">'+cardKpi("♙","المتدربون",tr.length,"إجمالي المركز")+cardKpi("▤","التسجيلات",en.length,"في جميع الدورات","orange")+cardKpi("☑","نسبة الحضور",rate,"٪ من السجلات المدخلة","purple")+cardKpi("$","قيمة تسجيلات تقديرية",total,"دولار أمريكي","blue")+'</div>'+
+ '<div class="kpi-grid">'+cardKpi("users","المتدربون",tr.length,"إجمالي المركز")+cardKpi("book-open","التسجيلات",en.length,"في جميع الدورات","orange")+cardKpi("clipboard-check","نسبة الحضور",rate,"٪ من السجلات المدخلة","purple")+cardKpi("wallet","قيمة تسجيلات تقديرية",total,"دولار أمريكي","blue")+'</div>'+
  '<div class="panel-grid"><div class="panel"><div class="panel-head"><h3>التسجيلات حسب الدورة</h3></div><div class="bar-list">'+(items.length?items.map(function(i){return '<div class="bar-item"><div><span>'+esc(i.name)+'</span><b>'+num(i.count)+'</b></div><div class="progress-track"><div class="progress-fill" style="width:'+Math.round(100*i.count/max)+'%"></div></div></div>'}).join(""):textEmpty("لا توجد بيانات"))+'</div></div>'+
  '<div class="panel"><div class="panel-head"><h3>ملخص مركز التدريب</h3></div><div class="limit-row"><span>عدد الفروع</span><b>'+num(scoped("branches").length)+'</b></div><div class="limit-row"><span>عدد المدربين</span><b>'+num(scoped("trainers").length)+'</b></div><div class="limit-row"><span>عدد الدورات</span><b>'+num(cr.length)+'</b></div><div class="limit-row"><span>الحصص المجدولة</span><b>'+num(scoped("sessions").length)+'</b></div><div class="limit-row"><span>شهادات المعاينة</span><b>'+num(scoped("certificates").length)+'</b></div></div></div>';
 }
@@ -144,7 +159,7 @@ function subscriptions(){var plan=center().plan||"Starter",limit=plan==="Solo"?1
  '<div class="plan-display"><div class="plan-info"><small>خطة المركز الحالية (تجريبية)</small><h2>'+esc(plan)+'</h2><p>خطة مبدئية لأغراض استعراض تجربة إدارة المراكز.</p><span class="small-pill" style="background:#ffffff22;color:white">نسخة معاينة • لا تتطلب دفعًا</span></div>'+
  '<div class="plan-limits"><h3 style="font-size:15px;margin-top:0">استخدام المركز الحالي</h3><div class="limit-row"><span>الفروع المستخدمة</span><b>'+num(scoped("branches").length)+' / '+esc(limit)+'</b></div><div class="limit-row"><span>المدربون</span><b>'+num(scoped("trainers").length)+'</b></div><div class="limit-row"><span>المتدربون</span><b>'+num(scoped("trainees").length)+'</b></div><div class="limit-row"><span>الدورات</span><b>'+num(scoped("courses").length)+'</b></div></div></div><div class="notice">عند تحويل النموذج إلى SaaS فعلي، ستُطبّق حدود الاشتراك على الخادم وقاعدة البيانات، وليس في الواجهة فقط.</div>'}
 function settings(){return pageHead("الإعدادات","خيارات معاينة مساحة العمل وإدارة البيانات المحلية.")+
- '<div class="panel" style="max-width:680px"><h3 style="font-size:16px">بيانات المركز التجريبي</h3><div class="limit-row"><span>المركز</span><b>'+esc(center().name)+'</b></div><div class="limit-row"><span>المدينة</span><b>'+esc(center().city||"—")+'</b></div><div class="limit-row"><span>الباقة</span><b>'+esc(center().plan||"—")+'</b></div><p style="font-size:12px;color:#859b8a;line-height:1.9">يمكنك التبديل بين مركزين تجريبيين من أعلى الصفحة. لا يحدث أي دخول حقيقي لحساب آخر، ولا توجد بيانات محفوظة على خادم.</p><div class="page-actions" style="margin-top:20px"><button class="app-btn primary" data-add="center">＋ إنشاء مركز تجريبي</button><button class="app-btn danger" data-reset="yes">↺ إعادة بيانات المعاينة</button></div></div><div class="panel" style="max-width:680px;margin-top:16px"><h3>جاهزية الإنتاج</h3><p style="font-size:12px;color:#809587;line-height:2">للتشغيل الحقيقي يجب تفعيل المصادقة الخلفية وقاعدة البيانات وسياسات العزل المؤسسي واختبارات الصلاحيات؛ الملفات التأسيسية موضّحة في المستودع.</p></div>'}
+ '<div class="panel" style="max-width:680px"><h3 style="font-size:16px">بيانات المركز التجريبي</h3><div class="limit-row"><span>المركز</span><b>'+esc(center().name)+'</b></div><div class="limit-row"><span>المدينة</span><b>'+esc(center().city||"—")+'</b></div><div class="limit-row"><span>الباقة</span><b>'+esc(center().plan||"—")+'</b></div><p style="font-size:12px;color:#859b8a;line-height:1.9">يمكنك التبديل بين مركزين تجريبيين من أعلى الصفحة. لا يحدث أي دخول حقيقي لحساب آخر، ولا توجد بيانات محفوظة على خادم.</p><div class="page-actions" style="margin-top:20px"><button class="app-btn primary" data-add="center">'+gmIcon("plus")+' إنشاء مركز تجريبي</button><button class="app-btn danger" data-reset="yes">'+gmIcon("refresh-cw")+' إعادة بيانات المعاينة</button></div></div><div class="panel" style="max-width:680px;margin-top:16px"><h3>جاهزية الإنتاج</h3><p style="font-size:12px;color:#809587;line-height:2">للتشغيل الحقيقي يجب تفعيل المصادقة الخلفية وقاعدة البيانات وسياسات العزل المؤسسي واختبارات الصلاحيات؛ الملفات التأسيسية موضّحة في المستودع.</p></div>'}
 function filterRows(){var search=q.trim().toLowerCase();els.page.querySelectorAll("[data-search]").forEach(function(node){node.style.display=!search||String(node.dataset.search).toLowerCase().includes(search)?"":"none"})}
 function optionRows(items,label){return items.map(function(i){return {value:i.id,label:label(i)}})}
 function schema(type,preset){
