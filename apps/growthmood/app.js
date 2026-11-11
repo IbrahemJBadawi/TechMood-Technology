@@ -144,7 +144,7 @@ function subscriptions(){var plan=center().plan||"Starter",limit=plan==="Solo"?1
  '<div class="plan-display"><div class="plan-info"><small>خطة المركز الحالية (تجريبية)</small><h2>'+esc(plan)+'</h2><p>خطة مبدئية لأغراض استعراض تجربة إدارة المراكز.</p><span class="small-pill" style="background:#ffffff22;color:white">نسخة معاينة • لا تتطلب دفعًا</span></div>'+
  '<div class="plan-limits"><h3 style="font-size:15px;margin-top:0">استخدام المركز الحالي</h3><div class="limit-row"><span>الفروع المستخدمة</span><b>'+num(scoped("branches").length)+' / '+esc(limit)+'</b></div><div class="limit-row"><span>المدربون</span><b>'+num(scoped("trainers").length)+'</b></div><div class="limit-row"><span>المتدربون</span><b>'+num(scoped("trainees").length)+'</b></div><div class="limit-row"><span>الدورات</span><b>'+num(scoped("courses").length)+'</b></div></div></div><div class="notice">عند تحويل النموذج إلى SaaS فعلي، ستُطبّق حدود الاشتراك على الخادم وقاعدة البيانات، وليس في الواجهة فقط.</div>'}
 function settings(){return pageHead("الإعدادات","خيارات معاينة مساحة العمل وإدارة البيانات المحلية.")+
- '<div class="panel" style="max-width:680px"><h3 style="font-size:16px">بيانات المركز التجريبي</h3><div class="limit-row"><span>المركز</span><b>'+esc(center().name)+'</b></div><div class="limit-row"><span>المدينة</span><b>'+esc(center().city||"—")+'</b></div><div class="limit-row"><span>الباقة</span><b>'+esc(center().plan||"—")+'</b></div><p style="font-size:12px;color:#859b8a;line-height:1.9">يمكنك التبديل بين مركزين تجريبيين من أعلى الصفحة. لا يحدث أي دخول حقيقي لحساب آخر، ولا توجد بيانات محفوظة على خادم.</p><button class="app-btn danger" data-reset="yes">↺ إعادة جميع بيانات المعاينة</button></div><div class="panel" style="max-width:680px;margin-top:16px"><h3>جاهزية الإنتاج</h3><p style="font-size:12px;color:#809587;line-height:2">للتشغيل الحقيقي يجب تفعيل المصادقة الخلفية وقاعدة البيانات وسياسات العزل المؤسسي واختبارات الصلاحيات؛ الملفات التأسيسية موضّحة في المستودع.</p></div>'}
+ '<div class="panel" style="max-width:680px"><h3 style="font-size:16px">بيانات المركز التجريبي</h3><div class="limit-row"><span>المركز</span><b>'+esc(center().name)+'</b></div><div class="limit-row"><span>المدينة</span><b>'+esc(center().city||"—")+'</b></div><div class="limit-row"><span>الباقة</span><b>'+esc(center().plan||"—")+'</b></div><p style="font-size:12px;color:#859b8a;line-height:1.9">يمكنك التبديل بين مركزين تجريبيين من أعلى الصفحة. لا يحدث أي دخول حقيقي لحساب آخر، ولا توجد بيانات محفوظة على خادم.</p><div class="page-actions" style="margin-top:20px"><button class="app-btn primary" data-add="center">＋ إنشاء مركز تجريبي</button><button class="app-btn danger" data-reset="yes">↺ إعادة بيانات المعاينة</button></div></div><div class="panel" style="max-width:680px;margin-top:16px"><h3>جاهزية الإنتاج</h3><p style="font-size:12px;color:#809587;line-height:2">للتشغيل الحقيقي يجب تفعيل المصادقة الخلفية وقاعدة البيانات وسياسات العزل المؤسسي واختبارات الصلاحيات؛ الملفات التأسيسية موضّحة في المستودع.</p></div>'}
 function filterRows(){var search=q.trim().toLowerCase();els.page.querySelectorAll("[data-search]").forEach(function(node){node.style.display=!search||String(node.dataset.search).toLowerCase().includes(search)?"":"none"})}
 function optionRows(items,label){return items.map(function(i){return {value:i.id,label:label(i)}})}
 function schema(type,preset){
@@ -154,6 +154,7 @@ function schema(type,preset){
  var trainee=optionRows(scoped("trainees"),function(t){return t.name});
  var enrollment=optionRows(scoped("enrollments").filter(function(e){return !scoped("certificates").some(function(c){return c.enrollmentId===e.id})}),function(e){var u=find("trainees",e.traineeId),c=find("courses",e.courseId);return (u?u.name:"—")+" — "+(c?c.title:"—")});
  var fields={
+  center:[["name","اسم المركز","text",true],["city","المدينة","text",true],["plan","الباقة التجريبية","select",true,[{value:"Solo",label:"Solo"},{value:"Starter",label:"Starter"},{value:"Growth",label:"Growth"},{value:"Enterprise",label:"Enterprise"}]]],
   branch:[["name","اسم الفرع","text",true],["city","المدينة","text",true],["address","العنوان","text",false]],
   trainer:[["name","اسم المدرب","text",true],["specialty","التخصص","text",true],["email","البريد الإلكتروني","email",false]],
   trainee:[["name","اسم المتدرب","text",true],["email","البريد الإلكتروني","email",false],["phone","رقم الهاتف","tel",false]],
@@ -165,7 +166,7 @@ function schema(type,preset){
  return fields[type]||[];
 }
 function openModal(type,preset){
- var names={branch:"فرع جديد",trainer:"مدرب جديد",trainee:"متدرب جديد",course:"دورة تدريبية جديدة",session:"حصة تدريبية جديدة",enrollment:"تسجيل متدرب في دورة",certificate:"شهادة تجريبية"};
+ var names={center:"مركز تدريبي جديد",branch:"فرع جديد",trainer:"مدرب جديد",trainee:"متدرب جديد",course:"دورة تدريبية جديدة",session:"حصة تدريبية جديدة",enrollment:"تسجيل متدرب في دورة",certificate:"شهادة تجريبية"};
  if(!names[type])return;
  var fields=schema(type,preset);
  var invalid=fields.some(function(f){return f[2]==="select"&&(!f[4]||f[4].length===0)});
@@ -190,6 +191,7 @@ function submitForm(e){
  if(type==="enrollment"){var c=find("courses",obj.courseId),t=find("trainees",obj.traineeId);if(!c||!t){toast("المتدرب أو الدورة غير صالح داخل هذا المركز");return}if(countFor(c.id)>=Number(c.capacity)){toast("اكتمل العدد المسموح به لهذه الدورة");return}if(scoped("enrollments").some(function(x){return x.traineeId===obj.traineeId&&x.courseId===obj.courseId})){toast("المتدرب مسجّل مسبقًا في هذه الدورة");return}}
  if(type==="certificate"){var en=find("enrollments",obj.enrollmentId);if(!en||scoped("certificates").some(function(c){return c.enrollmentId===en.id})){toast("هذا التسجيل غير متاح لإصدار شهادة تجريبية");return}obj.traineeId=en.traineeId;obj.courseId=en.courseId;obj.issuedAt=dayPlus(0)}
  if(type==="trainee")obj.joinedAt=dayPlus(0);
+ if(type==="center"){if(obj.name.length<2){toast("أدخل اسمًا صالحًا للمركز");return}delete obj.centerId;state.centers.push(obj);activeCenter=obj.id;safeSave();selectorRender();closeModal();navigate("dashboard");toast("تم إنشاء المركز في المعاينة المحلية ✓");return}
  var table=({branch:"branches",trainer:"trainers",trainee:"trainees",course:"courses",session:"sessions",enrollment:"enrollments",certificate:"certificates"})[type];
  if(!table)return;state[table].push(obj);safeSave();closeModal();render();toast("تمت الإضافة في بيانات المعاينة المحلية ✓");
 }
