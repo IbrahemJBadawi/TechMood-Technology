@@ -6,6 +6,13 @@
 
 https://growthmood.vercel.app/
 
+## New logo (12 November 2026)
+
+- Original generated GrowthMood G growth-chart mark was converted into a crisp transparent vector (`logo.svg`).
+- `app-icon.svg` and `favicon.svg` are the dark-green square icon for the browser and platform.
+- The header, footer and dashboard sidebar now use the new icon.
+- Source-generated marketing preview and transparent PNG versions are also available separately as design assets; the live website uses SVG for clarity.
+
 ## Visual identity update (11 November 2026)
 
 GrowthMood retains its own emerald-green identity while borrowing consistent interaction patterns from other TechMood projects:
