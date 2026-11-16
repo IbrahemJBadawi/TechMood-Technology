@@ -4,7 +4,7 @@ This index describes **13 current product entries** in TechMood Technology's cor
 
 | # | Product (canonical / current display) | Area | External URL |
 |---|---|---|---|
-| 1 | MentorMood (previously TechMood Academy; currently TechMood Platform domain) | Learning | https://techmoodtech.vercel.app |
+| 1 | MentorMood | Learning & mentoring | https://techmoodtech.vercel.app |
 | 2 | CodeMood | Learning | https://codemood.vercel.app |
 | 3 | GrowthMood | Learning | https://growthmood.vercel.app |
 | 4 | SharkMood | Entrepreneurship & venture incubation | https://sharkmood.vercel.app |
