@@ -53,7 +53,7 @@ It has not been applied to any database. It lays out tenants, memberships, role 
 
 ### Backend commissioning checklist
 
-1. Provision **a separate GrowthMood database/project** (not the existing MentorMood / TechMood database). Confirm expected costs first.
+1. Provision **a separate GrowthMood database/project** (not the existing MentorMood service database). Confirm expected costs first.
 2. Review and run the SQL migration in the isolated project.
 3. Build sign-up/sign-in with Supabase Auth and invite-based center membership.
 4. Replace localStorage CRUD with authenticated server calls and server-side validation; remove demo center switching from the real system.
