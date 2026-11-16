@@ -23,7 +23,7 @@ Open `index.html` in a browser or serve the directory with any static web server
 
 | Product | Verified published URL |
 | --- | --- |
-| MentorMood | https://techmoodtech.vercel.app |
+| MentorMood | https://mentormood.vercel.app |
 | Capital Digital Market (Gaza Online Market) | https://capital-digital-market.vercel.app |
 | AlJamal Store | https://aljamalstore.vercel.app |
 | Halaqati | https://halaqati.vercel.app |
