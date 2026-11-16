@@ -49,7 +49,7 @@ function enhanceStaticIcons(){
 
 /* TechMood Technology — no external JS dependencies, no back-end claims. */
 const PRODUCTS = [
- {id:'mentormood',group:'education',icon:'✦',color:'blue',url:'https://techmoodtech.vercel.app',ar:'MentorMood',en:'MentorMood',arDesc:'منصة للتعلّم والتوجيه المهني وربط المهارات بالمشاريع والفرص.',enDesc:'A learning and professional mentoring platform connecting skills, projects and opportunities.'},
+ {id:'mentormood',group:'education',icon:'✦',color:'blue',url:'https://mentormood.vercel.app',ar:'MentorMood',en:'MentorMood',arDesc:'منصة للتعلّم والتوجيه المهني وربط المهارات بالمشاريع والفرص.',enDesc:'A learning and professional mentoring platform connecting skills, projects and opportunities.'},
  {id:'codemood',group:'education',icon:'⌘',color:'violet',alias:'CodeMood',url:'https://codemood.vercel.app',ar:'CodeMood',en:'CodeMood',arDesc:'مساحة لتعلّم البرمجة والذكاء الاصطناعي والتطبيق العملي.',enDesc:'A practical space for coding, artificial intelligence and real projects.'},
  {id:'growthmood',group:'education',icon:'↗',color:'cyan',alias:'GrowthMood',url:'https://growthmood.vercel.app',ar:'GrowthMood',en:'GrowthMood',arDesc:'حلول لإدارة التدريب والبرامج التعليمية وتطوير التجربة داخل المراكز.',enDesc:'Tools for managing learning programs and training-centre experiences.'},
  {id:'sharkmood',group:'business',icon:'◈',color:'cyan',alias:'SharkMood',url:'https://sharkmood.vercel.app',ar:'SharkMood',en:'SharkMood',arDesc:'حاضنة أعمال رقمية لدراسة الأفكار ونماذج الأعمال والسوق والجدوى.',enDesc:'A digital venture incubator for idea validation, business models and feasibility.'},
