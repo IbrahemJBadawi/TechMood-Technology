@@ -15,7 +15,7 @@ Open `index.html` in a browser or serve the directory with any static web server
 **Features / المزايا**
 - Responsive Arabic (RTL) and English (LTR) experience.
 - Light and dark themes, with saved preferences.
-- Twelve venture cards, search, sector filters, and accessible details.
+- Thirteen venture cards, search, sector filters, and accessible details.
 - Verified public website links only; no invented destinations or launch statuses.
 - Reused original brand mark from TechMood's public `techmood` repository.
 
@@ -23,7 +23,7 @@ Open `index.html` in a browser or serve the directory with any static web server
 
 | Product | Verified published URL |
 | --- | --- |
-| TechMood Platform (MentorMood) | https://techmoodtech.com |
+| MentorMood | https://techmoodtech.vercel.app |
 | Capital Digital Market (Gaza Online Market) | https://capital-digital-market.vercel.app |
 | AlJamal Store | https://aljamalstore.vercel.app |
 | Halaqati | https://halaqati.vercel.app |
@@ -49,8 +49,8 @@ Other products are represented in the portfolio without unverified external link
 
 ## Review and safe deployment
 
-All changes were made on the separate branch `feat/corporate-website-2026`. This website is not a replacement for the existing TechMood Platform and does not change Supabase or other product repositories.
+All changes were made on the separate branch `feat/corporate-website-2026`. This company website is distinct from the MentorMood learning product and does not change Supabase or other product repositories.
 
 ## Maintenance
 
-Update the `PRODUCTS` collection in `app.js` to change a product description, add a verified external link, or adjust a category. Keep portfolio totals aligned with the twelve-product plan. Avoid inserting secrets, personal user data, or unverified claims in this public repository.
+Update the `PRODUCTS` collection in `app.js` to change a product description, add a verified external link, or adjust a category. Keep portfolio totals aligned with the current 13-product catalog. Avoid inserting secrets, personal user data, or unverified claims in this public repository.
