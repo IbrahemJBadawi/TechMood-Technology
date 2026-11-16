@@ -35,6 +35,12 @@ The first Vercel deployment succeeded before these visual updates. A subsequent 
 - Reports and subscription previews.
 - Data saved to the **current browser's localStorage only**.
 
+### Installable demo and offline access
+
+The static demo now includes a PWA manifest, install icon, offline app shell cache and explicit install/test-notification controls. After an online visit, the local demo can be reopened offline on the same device. The data remains browser-local; **this does not add user authentication, shared storage or cross-device sync**.
+
+The notification button demonstrates permission and a **local test notification**; real background Web Push from a server is not configured. Android/iOS installation and offline operation still need physical-device acceptance testing.
+
 **CRITICAL: This is a preview, not a live multi-tenant SaaS.** The demo's center selector is NOT authorization, and localStorage is NOT secure tenancy, authentication, or durable shared storage. Never enter real student/employee information, payments, or credentials in the demo. There is no payment processor or email delivery.
 
 ## Architecture / next milestone
