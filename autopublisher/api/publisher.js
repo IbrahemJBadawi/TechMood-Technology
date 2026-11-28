@@ -43,6 +43,3 @@ export async function scheduled(req,res){
   try{await generate();return res.status(200).json({notice:'Daily draft ready for human review'});}
   catch(e){return res.status(e.status||500).json({error:e.status?e.message:'Draft generation failed'});}
 }
-
-// Shared internal state helpers for authenticated maintenance and integration tests.
-export {read,write};
