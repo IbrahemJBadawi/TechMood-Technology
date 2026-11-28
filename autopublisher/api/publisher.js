@@ -14,7 +14,7 @@ const topics=[
 ['🎯 الإدارة والقيادة','digital leadership management'],
 ['📚 الأبحاث والدراسات العلمية','information systems research methods'],
 ['🌐 التقنيات والأخبار الحديثة','emerging information technology']];
-const signature='تابعني على:\n🌐 https://ibrahem-badawi-platform.vercel.app/\nⓕ https://www.facebook.com/ibrahemjbadawi\n🔗 https://www.linkedin.com/in/ibrahemjbadawi/\n➤ https://t.me/IbrahemJBadawiTech\n▶ https://www.youtube.com/@ibrahemjbadawi\n🌐 https://techmood-technology-corporate.vercel.app/';
+const signature="تابعني على:\n🌐 الموقع الشخصي (Portfolio): https://ibrahem-badawi-platform.vercel.app/\nⓕ Facebook: https://www.facebook.com/ibrahemjbadawi\n🔗 LinkedIn: https://www.linkedin.com/in/ibrahemjbadawi/\n➤ Telegram: https://t.me/IbrahemJBadawiTech\n▶ YouTube: https://www.youtube.com/@ibrahemjbadawi\n🌐 TechMood Technology: https://techmood-technology-corporate.vercel.app/";
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Hebron',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const fail=(message,status=400)=>Object.assign(new Error(message),{status});
 const match=(a,b)=>{if(!a||!b)return false;const x=Buffer.from(a),y=Buffer.from(b);return x.length===y.length&&timingSafeEqual(x,y)};
