@@ -1,0 +1,32 @@
+name: TechMood AutoPublisher daily draft
+on:
+  schedule:
+    - cron: '0 8 * * *'
+      timezone: 'Asia/Hebron'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: techmood-autopublisher-daily
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      ENDPOINT: ${{ vars.AUTOPUBLISHER_URL }}
+      SCHEDULE_SECRET: ${{ secrets.AUTOPUBLISHER_SCHEDULE_SECRET }}
+    steps:
+      - name: Generate draft only
+        shell: bash
+        run: |
+          set -eu
+          if [ -z "$ENDPOINT" ] || [ -z "$SCHEDULE_SECRET" ]; then
+            echo 'Setup required: AUTOPUBLISHER_URL and AUTOPUBLISHER_SCHEDULE_SECRET'
+            exit 1
+          fi
+          case "$ENDPOINT" in https://*) ;; *) exit 1 ;; esac
+          curl --silent --show-error --fail --max-time 100 --output /dev/null \
+            -X POST "${ENDPOINT%/}/api/publisher" \
+            -H "Authorization: Bearer $SCHEDULE_SECRET" \
+            -H 'Content-Type: application/json' --data '{"action":"generate"}'
+          echo 'Daily draft generated or already exists; human review required.'
