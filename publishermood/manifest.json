@@ -1,0 +1,19 @@
+{
+  "name": "PublisherMood",
+  "short_name": "PublisherMood",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6fb",
+  "theme_color": "#6545dc",
+  "icons": [
+    {
+      "src": "./mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
