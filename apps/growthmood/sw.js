@@ -1,5 +1,5 @@
 /* Public static demo only. Never cache API requests, account data or credentials. */
-const CACHE_NAME = "growthmood-shell-20261128-brand-v2";
+const CACHE_NAME = "growthmood-shell-20261128-blue-v3";
 const APP_FILES = ["/","/index.html","/app.js","/icons.js","/styles.css","/design-refresh.css","/app-icon.svg","/pwa.js","/pwa.css","/favicon.svg","/manifest.webmanifest","/icon-192.png","/icon-512.png"];
 const APP_FILE_PATHS = new Set(APP_FILES);
 self.addEventListener("install", event => {
