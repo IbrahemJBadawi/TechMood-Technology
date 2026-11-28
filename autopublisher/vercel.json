@@ -5,6 +5,12 @@
   "functions": {
     "api/publisher.js": {
       "maxDuration": 60
+    },
+    "api/cron-summer.js": {
+      "maxDuration": 60
+    },
+    "api/cron-winter.js": {
+      "maxDuration": 60
     }
   },
   "headers": [
@@ -20,6 +26,16 @@
           "value": "no-referrer"
         }
       ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron-summer",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron-winter",
+      "schedule": "0 6 * * *"
     }
   ]
 }
