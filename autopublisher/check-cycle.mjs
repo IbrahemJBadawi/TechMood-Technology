@@ -1,20 +1,38 @@
-import handler from './api/publisher.js';
+import handler,{read,write} from './api/publisher.js';
 const report=(name,data)=>console.log('AP_CHECK '+JSON.stringify({name,...data}));
-async function call(action,id,admin=true){let code,result;const res={setHeader(){},status(n){code=n;return this},json(x){result=x;return this}};await handler({method:action==='list'?'GET':'POST',headers:admin?{authorization:'Bearer '+process.env.ADMIN_PASSWORD}:{},body:{action,id}},res);return {code,result}}
-const summarize=r=>({status:r.code,error:r.result?.error||null,posts:r.result?.posts?.length??null});
+async function call(action,id){let code,result;const res={setHeader(){},status(n){code=n;return this},json(x){result=x;return this}};await handler({method:action==='list'?'GET':'POST',headers:{authorization:'Bearer '+process.env.ADMIN_PASSWORD},body:{action,id}},res);return {code,result}}
+const id='2026-11-28';
+const originalTitle='الابتكار الرقمي وريادة الأعمال.. ركائز التنافسية الحديثة';
+const revisedTitle='الابتكار الرقمي.. من التقنية إلى نموذج الأعمال';
+const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Hebron',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 try {
- const unauthorized=await call('list',null,false);report('auth_guard',{status:unauthorized.code});
- const listed=await call('list');report('live_storage_read',summarize(listed));
- const bot=process.env.TELEGRAM_BOT_TOKEN;
- if(bot){try{const base='https://api.telegram.org/bot'+bot;const me=await (await fetch(base+'/getMe',{signal:AbortSignal.timeout(8000)})).json();report('telegram_identity',{ok:!!me.ok});if(me.ok){const member=await (await fetch(base+'/getChatMember?chat_id=%40IbrahemJBadawiTech&user_id='+me.result.id,{signal:AbortSignal.timeout(8000)})).json();report('telegram_permission',{ok:!!member.ok,administrator:member.result?.status==='administrator',canPost:member.result?.can_post_messages===true});}}catch{report('telegram',{ok:false,error:'network or response failure'})}}
- if(process.env.GEMINI_API_KEY){try{const rr=await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=100',{headers:{'x-goog-api-key':process.env.GEMINI_API_KEY},signal:AbortSignal.timeout(10000)});const jj=await rr.json();const models=(jj.models||[]).filter(m=>m.supportedGenerationMethods?.includes('generateContent')).map(m=>m.name.replace('models/',''));report('gemini_models',{status:rr.status,models});const candidate=['gemini-3.1-flash-lite','gemini-2.5-flash','gemini-3.1-flash-lite-preview','gemini-3-flash-preview','gemini-2.5-flash-lite'].find(m=>models.includes(m));if(candidate){process.env.GEMINI_MODEL=candidate;report('gemini_candidate',{model:candidate})}}catch{report('gemini_models',{error:'Unable to list models'})}}
- if(listed.code===200){const generated=await call('generate');report('live_generate',summarize(generated));if(generated.code===200){const post=generated.result.posts.at(-1);if(post)report('draft',{id:post.id,status:post.status,title:post.title,text:post.text});const check=await call('generate');report('duplicate_guard',summarize(check))}}
-}catch{report('live_error',{error:'Unexpected diagnostic failure'})}
-// Isolate the approval path using mock services and mock storage; never send a Telegram message.
-try{
- const realFetch=globalThis.fetch;const saved={};for(const k of ['GH_STATE_TOKEN','STATE_KEY','ADMIN_PASSWORD','GEMINI_API_KEY','TELEGRAM_BOT_TOKEN']){saved[k]=process.env[k];process.env[k]='fixture-test-'+k}
- let blob=null,sendCount=0;
- const reply=(obj,status=200)=>new Response(JSON.stringify(obj),{status,headers:{'Content-Type':'application/json'}});
- globalThis.fetch=async(input,opts={})=>{const url=String(input);if(url.includes('api.github.com')&&url.includes('/branches/'))return reply({name:'autopublisher-state'});if(url.includes('api.github.com')&&url.includes('/contents/')){if(opts.method==='PUT'){blob=JSON.parse(opts.body).content;return reply({content:{sha:'test'}})}return blob?reply({content:blob,sha:'test'}):reply({},404)}if(url.includes('api.crossref.org'))return reply({message:{items:[{DOI:'10.0000/fixture',title:['Fixture research'],abstract:'A simulated research abstract for testing only. '.repeat(12),publisher:'Fixture',published:{'date-parts':[[2026,1,1]]}}]}});if(url.includes('doi.org'))return new Response(null,{status:302,headers:{location:'https://example.org/fixture'}});if(url.includes('generativelanguage.googleapis.com'))return reply({candidates:[{content:{parts:[{text:JSON.stringify({relevant:true,title:'البيانات.. من المعرفة إلى القرار',body:'تساعد نظم المعلومات (Information Systems) المؤسسات على تنظيم البيانات وتحويلها إلى معرفة عملية. ويتيح ربط البيانات بمؤشرات الأداء فهم المشكلات وتحديد الأولويات وتحسين القرارات اليومية. لا تكفي الأدوات وحدها لتحقيق النتائج، إذ تعتمد القيمة على جودة البيانات وتدريب العاملين ووضوح الأهداف ومراجعة النتائج بصورة دورية ومنهجية داخل المؤسسة.',question:'كيف يمكن تحسين جودة البيانات؟',hashtags:['البيانات','نظم_المعلومات']})}]}}]});if(url.includes('api.telegram.org')&&url.endsWith('/sendMessage')){sendCount++;return reply({ok:true,result:{message_id:123}})}throw Error('Blocked unexpected network call')};
- try{const g=await call('generate');const id=g.result?.posts?.[0]?.id;report('mock_generate',{status:g.code,pending:g.result?.posts?.[0]?.status==='pending',sentBeforeApproval:sendCount,error:g.result?.error||null});if(id){const a=await call('approve',id);report('mock_approve',{status:a.code,published:a.result?.posts?.[0]?.status==='published',mockSendCount:sendCount});const again=await call('approve',id);report('mock_duplicate_publish',{status:again.code,mockSendCount:sendCount})}}finally{globalThis.fetch=realFetch;for(const k in saved){if(saved[k]===undefined)delete process.env[k];else process.env[k]=saved[k]}}
-}catch{report('mock_error',{error:'Unexpected mock diagnostic failure'})}
+ if(day!==id){report('publication_skipped',{reason:'One-time authorization expired'});}
+ else {
+ const snap=await read(),p=snap.data.posts.find(x=>x.id===id);
+ if(!p){report('publication_skipped',{reason:'Exact draft absent'});}
+ else if(p.status==='published'){report('already_published',{messageId:p.messageId});}
+ else if(p.status!=='pending'||![originalTitle,revisedTitle].includes(p.title)){report('publication_skipped',{reason:'Unexpected draft status or title'});}
+ else {
+ if(p.title===originalTitle){
+ if(p.source?.doi!=='10.52305/svxf0042')throw Error('Unexpected original reference');
+ const doi='10.1007/s11846-023-00638-9',url='https://doi.org/'+doi;
+ const title='Digital innovation in entrepreneurial firms: a systematic literature review';
+ const body='يتيح الابتكار الرقمي (Digital Innovation) للشركات الناشئة إعادة تصميم منتجاتها وخدماتها ونماذج أعمالها. وتوضح مراجعة منهجية شملت 185 دراسة أن فهم هذا المجال يتطلب النظر إلى المنصات الرقمية وشبكات التعاون ومنظومات الابتكار، لا إلى التكنولوجيا بمعزل عن البيئة المحيطة. ومن هنا يمكن لرواد الأعمال تقييم الفرص الرقمية ضمن نموذج أعمال واضح، بدلًا من الاكتفاء بتبنّي أدوات جديدة.';
+ const question='كيف يمكن للشركات الناشئة توظيف التقنية لتطوير نموذج أعمالها بدلًا من رقمنة عملياتها فقط؟';
+ const tags=['#الابتكار_الرقمي','#ريادة_الأعمال','#DigitalInnovation'];
+ const signature=p.text.split('\n\n').at(-1);
+ if(!signature.startsWith('تابع إبراهيم بدوي | Ibrahem J. Badawi')||signature.split('\n').length!==7)throw Error('Unexpected signature');
+ const count=body.split(/\s+/).length;if(count<45||count>80)throw Error('Editorial word count');
+ const cross=await fetch('https://api.crossref.org/works/'+doi,{signal:AbortSignal.timeout(10000)});if(!cross.ok)throw Error('Crossref unavailable');const meta=(await cross.json()).message;
+ if(meta.DOI.toLowerCase()!==doi||!meta.title?.[0]?.toLowerCase().includes(title.toLowerCase()))throw Error('Reference metadata mismatch');
+ const abstract=String(meta.abstract||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+ const verify=await fetch(url,{method:'HEAD',redirect:'manual',signal:AbortSignal.timeout(8000)});if(!(verify.ok||(verify.status>=300&&verify.status<400&&verify.headers.get('location'))))throw Error('DOI resolution failed');
+ Object.assign(p,{title:revisedTitle,body,question,tags,source:{doi,url,title,abstract,publisher:meta.publisher||'Springer Nature',date:'2023',doiResolved:true},reviewedAt:new Date().toISOString(),reviewNote:'One-time publication explicitly requested; content independently reviewed against publisher source.'});
+ p.text=[p.topic,p.title,p.body,'💬 '+p.question,'📚 المرجع: '+title+'\n'+url,tags.join(' '),signature].join('\n\n');await write(snap.data,snap.sha);report('reviewed_saved',{id,words:count,doi});
+ }
+ const approval=await call('approve',id);const item=approval.result?.posts?.find(x=>x.id===id);report('real_publish',{status:approval.code,error:approval.result?.error||null,state:item?.status||null,messageId:item?.messageId||null});
+ const after=await call('list');const final=after.result?.posts?.find(x=>x.id===id);report('verify_persisted',{status:after.code,state:final?.status||null,messageId:final?.messageId||null,publishedAt:final?.publishedAt||null});
+ if(final?.status==='published'){const repeat=await call('approve',id);report('duplicate_publish_guard',{status:repeat.code});}
+ }
+ }
+}catch(e){report('publication_error',{error:String(e.message).slice(0,150).replace(/https?:\/\/[^\s]+/g,'[url]')});}
