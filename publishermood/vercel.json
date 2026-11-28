@@ -1,7 +1,7 @@
 {
   "framework": null,
-  "buildCommand": null,
-  "outputDirectory": ".",
+  "buildCommand": "mkdir -p public && cp index.html setup.html mark.svg manifest.json sw.js public/",
+  "outputDirectory": "public",
   "headers": [
     {
       "source": "/sw.js",
@@ -24,6 +24,30 @@
           "value": "strict-origin-when-cross-origin"
         }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 180
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron-summer",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron-winter",
+      "schedule": "0 6 * * *"
     }
   ]
 }
