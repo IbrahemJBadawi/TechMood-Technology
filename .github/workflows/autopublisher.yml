@@ -1,8 +1,5 @@
 name: TechMood AutoPublisher daily draft
 on:
-  schedule:
-    - cron: '0 8 * * *'
-      timezone: 'Asia/Hebron'
   workflow_dispatch:
 permissions: {}
 concurrency:
@@ -13,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
-      ENDPOINT: ${{ vars.AUTOPUBLISHER_URL }}
+      ENDPOINT: https://techmood-autopublisher.vercel.app
       SCHEDULE_SECRET: ${{ secrets.AUTOPUBLISHER_SCHEDULE_SECRET }}
     steps:
       - name: Generate draft only
@@ -21,7 +18,7 @@ jobs:
         run: |
           set -eu
           if [ -z "$ENDPOINT" ] || [ -z "$SCHEDULE_SECRET" ]; then
-            echo 'Setup required: AUTOPUBLISHER_URL and AUTOPUBLISHER_SCHEDULE_SECRET'
+            echo 'Optional manual workflow requires AUTOPUBLISHER_SCHEDULE_SECRET; daily generation uses Vercel Cron'
             exit 1
           fi
           case "$ENDPOINT" in https://*) ;; *) exit 1 ;; esac
